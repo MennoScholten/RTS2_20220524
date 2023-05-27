@@ -31,6 +31,26 @@ int main()
     // Add block to board
     gameBoard.addBlock(0, 0, &gameBlockReference);
     gameBoard.addBlock(0, 2, &gameBlockReference2);
+	
+    Tetromino* testTetro1 = new Tetromino(150.f, 150.f, Tetromino::blockType::Z);
+    testTetro1->rotateTetromino(90.f);
+
+    Tetromino* testTetro2 = new Tetromino(450.f, 150.f, Tetromino::blockType::L);
+    testTetro2->rotateTetromino(90.f);
+
+    Tetromino* testTetro3 = new Tetromino(450.f, 350.f, Tetromino::blockType::L);
+    testTetro3->rotateTetromino(90.f);
+
+    Tetromino* testTetro4 = new Tetromino(550.f, 450.f, Tetromino::blockType::I);
+    testTetro4->rotateTetromino(90.f);
+
+    // Add block to board
+    gameBoard.addBlock(0, 0, &gameBlockReference);
+    gameBoard.addBlock(0, 2, &gameBlockReference2);
+    gameBoard.addTetromino(testTetro1);
+    gameBoard.addTetromino(testTetro2);
+    gameBoard.addTetromino(testTetro3);
+    gameBoard.addTetromino(testTetro4);
 
 	Window gameWindow(
         gameboardWidth * gameBlockReference.getWidth(), 
