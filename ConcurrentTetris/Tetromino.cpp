@@ -3,7 +3,7 @@
 Tetromino::Tetromino()
 {
 	//Block a(0.f, 0.f, 0.f, 0.f, sf::Color::Cyan);
-	this->blockArray.push_back(new Block(0.f, 0.f, 0.f, 0.f, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(0.f, 0.f, sf::Color::Cyan));
 }
 
 Tetromino::Tetromino(blockType type)
@@ -109,56 +109,89 @@ void Tetromino::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Tetromino::setupIBlock(float x, float y)
 {
-	this->blockArray.push_back(new Block(x, y, 100.f, 50.f, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, 50.f, 50.f, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, 0.f, 50.f, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, -50.f, 50.f, sf::Color::Cyan));
-}
+	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
 
-void Tetromino::setupLBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, 75.f, 75.f, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::White));
-}
+	this->blockArray[0]->setOrigin(2 * this->blockArray[0]->getWidth(), 1 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(1 * this->blockArray[1]->getWidth(), 1 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(0 * this->blockArray[2]->getWidth(), 1 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-1 * this->blockArray[3]->getWidth(), 1 * this->blockArray[3]->getHeight());
+}											   
+											   
+void Tetromino::setupLBlock(float x, float y)  
+{											   
+	this->blockArray.push_back(new Block(x, y, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, sf::Color::White));
 
-void Tetromino::setupJBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, -25.f, 75.f, sf::Color::Blue));
-}
+	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(1.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
+}											   
+											   
+void Tetromino::setupJBlock(float x, float y)  
+{											   
+	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
 
-void Tetromino::setupZBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, -25.f, 75.f, sf::Color::Green));
-}
+	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 0.5 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(-0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 1.5 * this->blockArray[3]->getHeight());
+}											   
+											   
+void Tetromino::setupZBlock(float x, float y)  
+{											   
+	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
 
-void Tetromino::setupSBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, 75.f, 75.f, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Red));
+	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 0.5 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 1.5 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 1.5 * this->blockArray[3]->getHeight());
+}											   
+											   
+void Tetromino::setupSBlock(float x, float y)  
+{											   
+	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
+	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 1.5 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
 }
 
 void Tetromino::setupTBlock(float x, float y)
 {
-	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
+
+	this->blockArray[0]->setOrigin(0.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(1.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
 }
 
 void Tetromino::setupBBlock(float x, float y)
 {
-	this->blockArray.push_back(new Block(x, y, 50.f, 50.f, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, 0.f, 50.f, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, 50.f, 0.f, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, 0.f, 0.f, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
+	this->blockArray[0]->setOrigin(1 * this->blockArray[0]->getWidth(), 1 * this->blockArray[0]->getHeight());
+	this->blockArray[1]->setOrigin(0 * this->blockArray[1]->getWidth(), 1 * this->blockArray[1]->getHeight());
+	this->blockArray[2]->setOrigin(1 * this->blockArray[2]->getWidth(), 0 * this->blockArray[2]->getHeight());
+	this->blockArray[3]->setOrigin(0 * this->blockArray[3]->getWidth(), 0 * this->blockArray[3]->getHeight());
 }

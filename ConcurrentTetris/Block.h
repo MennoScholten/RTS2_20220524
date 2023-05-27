@@ -7,8 +7,8 @@ private:
 
     sf::RectangleShape block;   // Datatype to draw a rectangular/square block 
 
-    const int width = 50; // Size in pixels 
-    const int height = 50; // Size in pixels
+    const float width = 30; // Size in pixels 
+    const float height = 30; // Size in pixels
 
     float originX = 0.0;    // X-axis Origin of the shape 
     float originY = 0.0;    // Y-axis Origin of the shape
@@ -28,11 +28,11 @@ public:
     // Constructors
     Block();    // Default constructor
     Block(int row, int col, const sf::Color blockColor);   // Might be removed!
-    Block(float positionX, float positionY, float originX, float originY, sf::Color blockColor);
+    Block(float positionX, float positionY,  sf::Color blockColor); // float originX, float originY,
 
     // Accessors
-    int getWidth() const;
-    int getHeight() const;
+    float getWidth() const;
+    float getHeight() const;
     sf::Color getColor() const;
 
     void getPosition(float& x, float& y);

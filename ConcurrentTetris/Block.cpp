@@ -19,14 +19,14 @@ Block::Block(int row, int col, const sf::Color blockColor) :
     isAlive = false;
 }
 
-Block::Block(float positionX, float positionY, float originX, float originY, sf::Color blockColor)
+Block::Block(float positionX, float positionY,  sf::Color blockColor) // float originX, float originY,
 {
-    this->originX = originX;
-    this->originY = originY;
+    /*this->originX = originX;
+    this->originY = originY;*/
     this->positionX = positionX;
     this->positionY = positionY;
     this->block.setSize(sf::Vector2f(this->width, this->height));
-    this->block.setOrigin(sf::Vector2f(this->originX, this->originY));
+    //this->block.setOrigin(sf::Vector2f(this->originX, this->originY));
     this->block.setPosition(sf::Vector2f(this->positionX, this->positionY));
     setPosition(positionX, positionY);
     setOrigin(originX, originY);
@@ -39,12 +39,12 @@ void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(block, states);
 }
 
-int Block::getWidth() const
+float Block::getWidth() const
 {
     return this->width;
 }
 
-int Block::getHeight() const
+float Block::getHeight() const
 {
     return this->height;
 }
