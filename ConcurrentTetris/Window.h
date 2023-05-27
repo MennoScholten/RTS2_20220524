@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Gameboard.h"
-#include "Block.h"
 
 class Window
 {
@@ -22,7 +21,7 @@ public:
     void close() { window.close(); }
     void clear() { window.clear(); }
     void display() { window.display(); }
-    
+
 
 private:
     sf::RenderWindow window;
@@ -33,3 +32,4 @@ private:
     int SCOREBOARD_SPACER;
 };
 
+#pragma once
