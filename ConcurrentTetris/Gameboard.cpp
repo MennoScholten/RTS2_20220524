@@ -1,4 +1,5 @@
 #include "Gameboard.h"
+#include <iostream>
 
 // Constructor
 Gameboard::Gameboard(int columns, int rows) {
@@ -24,6 +25,34 @@ int Gameboard::getRows() const
 void Gameboard::addBlock(int row, int column, Block* blockObject) {
     Gameboard::board[row][column] = blockObject;
 }
+
+void Gameboard::addTetromino(Tetromino* tetrominoObject)
+{
+    std::vector<Block*> TetrominoBlocks = tetrominoObject->getBlocks();
+    float x, y = 0;
+    for (int i = 0; i < TetrominoBlocks.size(); i++) {
+        std::cout << "New block added\n";
+        TetrominoBlocks[i]->getPosition(x, y);
+        std::cout << "Position X: " << x << "\n";
+        std::cout << "Position Y: " << y << "\n";
+        y = y - TetrominoBlocks[i]->getOriginX();
+        x = x - TetrominoBlocks[i]->getOriginY();
+        std::cout << "X: " << x << "\n";
+        std::cout << "Y: " << y << "\n";
+
+        sf::Transform testTrans = TetrominoBlocks[i]->getBlockTransform();
+        sf::Vector2f transf = testTrans.transformPoint(0, 0);
+
+        std::cout << "XTrans: " << transf.x << "\n";
+        std::cout << "YTrans: " << transf.y << "\n";
+
+        int col = std::floor(transf.y / TetrominoBlocks[i]->getWidth());
+        int row = std::floor(transf.x / TetrominoBlocks[i]->getHeight());
+
+        Gameboard::board[col][row] = TetrominoBlocks[i];
+    }
+}
+
 
 bool Gameboard::isOccupied(int row, int column)
 {
