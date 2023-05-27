@@ -1,44 +1,164 @@
-#pragma once
-#include "Block.h"
-#include "SFML/Graphics.hpp"
-#include <vector>
+#include "Tetromino.h"
 
-class Tetromino : public sf::Drawable
+Tetromino::Tetromino()
 {
-	std::vector<Block*> blockArray;
-	float originX = 0.0;    // X-axis Origin of the shape 
-	float originY = 0.0;    // Y-axis Origin of the shape
+	//Block a(0.f, 0.f, 0.f, 0.f, sf::Color::Cyan);
+	this->blockArray.push_back(new Block(0.f, 0.f, 0.f, 0.f, sf::Color::Cyan));
+}
 
-	float positionX = 0.0;  // X-axis pixel position of the shape
-	float positionY = 0.0;  // Y-axis Pixel position of the shape
+Tetromino::Tetromino(blockType type)
+{
+	switch (type) {
+	case I:
+		setupIBlock(100, 100);
+	case L:
+		setupLBlock(100, 100);
+	case J:
+		setupJBlock(100, 100);
+	case Z:
+		setupZBlock(100, 100);
+	case S:
+		setupSBlock(100, 100);
+	case T:
+		setupTBlock(100, 100);
+	case B:
+		setupBBlock(100, 100);
+	}
+}
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Virtual function to draw custom classes 
+Tetromino::Tetromino(float posX, float posY, blockType type)
+{
+	this->positionX = posX;
+	this->positionY = posY;
+	switch (type) {
+	case I:
+		setupIBlock(this->positionX, this->positionY);
+		break;
+	case L:
+		setupLBlock(this->positionX, this->positionY);
+		break;
+	case J:
+		setupJBlock(this->positionX, this->positionY);
+		break;
+	case Z:
+		setupZBlock(this->positionX, this->positionY);
+		break;
+	case S:
+		setupSBlock(this->positionX, this->positionY);
+		break;
+	case T:
+		setupTBlock(this->positionX, this->positionY);
+		break;
+	case B:
+		setupBBlock(this->positionX, this->positionY);
+		break;
+	}
 
-	void setupIBlock(float x, float y);
-	void setupLBlock(float x, float y);
-	void setupJBlock(float x, float y);
-	void setupZBlock(float x, float y);
-	void setupSBlock(float x, float y);
-	void setupTBlock(float x, float y);
-	void setupBBlock(float x, float y);
+}
 
-public:
-	enum blockType { I, L, J, Z, S, T, B }; // Enum for holding blocktypes
+Tetromino::~Tetromino()
+{
+	this->blockArray.clear();
+}
 
-	// Constructors
-	Tetromino();
-	Tetromino(blockType type);
-	Tetromino(float posX, float posY, blockType type);
-	~Tetromino();
+std::vector<Block*> Tetromino::getBlocks()
+{
+	return this->blockArray;
+}
 
-	std::vector<Block*> getBlocks();
 
-	void getPosition(float& x, float& y);
+void Tetromino::getPosition(float& x, float& y)
+{
+	x = this->positionX;
+	y = this->positionY;
+}
 
-	void setPosition(float x, float y);
-	void setColor(const sf::Color blockColor);
+void Tetromino::setPosition(float x, float y)
+{
+	this->positionX = x;
+	this->positionY = y;
+}
 
-	void moveTetromino(float x, float y);
-	void rotateTetromino(float angleDeg);
+void Tetromino::setColor(const sf::Color blockColor)
+{
+	for (int i = 0; i < this->blockArray.size(); i++) {
+		this->blockArray[i]->setColor(blockColor);
+	}
+}
 
-};
+void Tetromino::moveTetromino(float x, float y)
+{
+	for (int i = 0; i < this->blockArray.size(); i++) {
+		this->blockArray[i]->moveBlock(x, y);
+	}
+}
+
+void Tetromino::rotateTetromino(float angleDeg)
+{
+	for (int i = 0; i < this->blockArray.size(); i++) {
+		this->blockArray[i]->rotateBlock(angleDeg);
+	}
+}
+
+void Tetromino::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (int i = 0; i < this->blockArray.size(); i++) {
+		target.draw(*blockArray[i]);
+	}
+}
+
+void Tetromino::setupIBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 100.f, 50.f, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, 50.f, 50.f, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, 0.f, 50.f, sf::Color::Cyan));
+	this->blockArray.push_back(new Block(x, y, -50.f, 50.f, sf::Color::Cyan));
+}
+
+void Tetromino::setupLBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 75.f, 75.f, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::White));
+	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::White));
+}
+
+void Tetromino::setupJBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Blue));
+	this->blockArray.push_back(new Block(x, y, -25.f, 75.f, sf::Color::Blue));
+}
+
+void Tetromino::setupZBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Green));
+	this->blockArray.push_back(new Block(x, y, -25.f, 75.f, sf::Color::Green));
+}
+
+void Tetromino::setupSBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 75.f, 75.f, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Red));
+	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Red));
+}
+
+void Tetromino::setupTBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 25.f, 75.f, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, 75.f, 25.f, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, 25.f, 25.f, sf::Color::Magenta));
+	this->blockArray.push_back(new Block(x, y, -25.f, 25.f, sf::Color::Magenta));
+}
+
+void Tetromino::setupBBlock(float x, float y)
+{
+	this->blockArray.push_back(new Block(x, y, 50.f, 50.f, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, 0.f, 50.f, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, 50.f, 0.f, sf::Color::Yellow));
+	this->blockArray.push_back(new Block(x, y, 0.f, 0.f, sf::Color::Yellow));
+}
