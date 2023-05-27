@@ -4,10 +4,10 @@
 class Block
 {
 private:
-    int width = 50; // pixels
-    int height = 50; // pixels
-    int position_row = 0; // position in gameboard
-    int position_column = 0; // position in gameboard
+    int width = 30; // pixels
+    int height = 30; // pixels
+    int position_row = 0; // relative_position
+    int position_column = 0; // relative_position
     sf::Color color = sf::Color::Transparent;
     bool isAlive = false;
 
