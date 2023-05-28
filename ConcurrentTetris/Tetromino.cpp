@@ -15,13 +15,13 @@ Tetromino Tetromino::blockO(int x, int y, sf::Color color, Gameboard* gameboard)
     Block* block2 = new Block(x + 1, y, color);
     Block* block3 = new Block(x, y + 1, color);
     Block* block4 = new Block(x + 1, y + 1, color);
-    tetromino.pivotPoint.x = 0; // Can't rotate
-    tetromino.pivotPoint.y = 0; // Can't rotate
+    tetromino.pivotPointOffset.x = 0;
+    tetromino.pivotPointOffset.y = 0;
     tetromino.blocks.push_back(block1);
     tetromino.blocks.push_back(block2);
     tetromino.blocks.push_back(block3);
     tetromino.blocks.push_back(block4);
-    this->setGridPosition(x, y);
+    tetromino.setGridPosition(x, y);
     tetromino.addToGameBoard(gameboard);
     return tetromino;
 }
@@ -38,7 +38,7 @@ Tetromino Tetromino::blockL(int x, int y, sf::Color color, Gameboard* gameboard)
     tetromino.blocks.push_back(block2);
     tetromino.blocks.push_back(block3);
     tetromino.blocks.push_back(block4);
-    this->setGridPosition(x, y);
+    tetromino.setGridPosition(x, y);
     tetromino.addToGameBoard(gameboard);
     return tetromino;
 }
@@ -49,13 +49,13 @@ Tetromino Tetromino::blockT(int x, int y, sf::Color color, Gameboard* gameboard)
     Block* block2 = new Block(x + 1, y + 1, color);
     Block* block3 = new Block(x + 1, y + 2, color);
     Block* block4 = new Block(x + 2, y + 1, color);
-    tetromino.pivotPoint.x = x + 1;
-    tetromino.pivotPoint.y = y;
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
     tetromino.blocks.push_back(block1);
     tetromino.blocks.push_back(block2);
     tetromino.blocks.push_back(block3);
     tetromino.blocks.push_back(block4);
-    this->setGridPosition(x, y);
+    tetromino.setGridPosition(x, y);
     tetromino.addToGameBoard(gameboard);
     return tetromino;
 }
@@ -87,7 +87,7 @@ void Tetromino::rotateClockwise(Gameboard* board) {
     }
     this->getPivotPoint(); // Update pivot
     // Can't rotate (O block)
-    if (this->pivotPoint.x == 0 || this->pivotPoint.y == 0) {
+    if (this->pivotPointOffset.x == 0 && this->pivotPointOffset.y == 0) {
         return;
     }
     for (auto block : blocks) {
