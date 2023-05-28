@@ -10,6 +10,8 @@ public:
     Tetromino(int x, int y, sf::Color color, Gameboard* gameboard);
     void addToGameBoard(Gameboard* gameboard);
     void rotateClockwise(Gameboard* board);
+    void moveRight(Gameboard* board);
+    void moveLeft(Gameboard* board);
     Tetromino blockO(int x, int y, sf::Color color, Gameboard* gameboard);
     Tetromino blockL(int x, int y, sf::Color color, Gameboard* gameboard);
     Tetromino blockT(int x, int y, sf::Color color, Gameboard* gameboard);

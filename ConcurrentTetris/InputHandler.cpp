@@ -14,9 +14,11 @@ void InputHandler::processInput(std::vector<Player*>& players, Gameboard* gamebo
         for (auto player : players) {
             if (pressedKeys.count(player->getMoveLeftKey())) {
                 std::cout << "Move left " << player << "\n";
+                if (player->getActiveTetrimino() != nullptr) player->getActiveTetrimino()->moveLeft(gameboard);
             }
             if (pressedKeys.count(player->getMoveRightKey())) {
                 std::cout << "Move right " << player << "\n";
+                if (player->getActiveTetrimino() != nullptr) player->getActiveTetrimino()->moveRight(gameboard);
             }
             if (pressedKeys.count(player->getRotateKey())) {
                 std::cout << "Rotate " << player << "\n";

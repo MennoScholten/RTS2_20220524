@@ -10,8 +10,8 @@
 int main()
 {
     /* Should be obtained from main menu */
-	int gameboardWidth = 10;
-	int gameboardHeight = 10;
+	int gameboardWidth = 22;
+	int gameboardHeight = 22;
     int playerCount = 2;
     std::vector<Player*> players;
     
@@ -31,8 +31,8 @@ int main()
 
     // Tetromino tetrominoO = tetrominoO.blockO(3, 4, sf::Color::Blue, &gameBoard);
     // player1.setActiveTetrimino(&tetrominoO);
-    // Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::Blue, &gameBoard);
-    // player1.setActiveTetrimino(&tetrominoL);
+    Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::Blue, &gameBoard);
+    player1.setActiveTetrimino(&tetrominoL);
     // Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Blue, &gameBoard);
     // player1.setActiveTetrimino(&tetrominoT);
 
