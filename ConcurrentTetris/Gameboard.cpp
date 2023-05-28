@@ -44,7 +44,6 @@ void Gameboard::moveBlock(Block* block, int newX, int newY) {
         this->board[block->getPositionY()][block->getPositionX()] = nullptr;
         this->board[newY][newX] = block;
     }
-    // Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
     else {
         this->board[newY][newX] = block;
     }

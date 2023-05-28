@@ -12,14 +12,17 @@ public:
     void rotateClockwise(Gameboard* board);
     void moveRight(Gameboard* board);
     void moveLeft(Gameboard* board);
+    sf::Vector2i getPivotPoint();
+    void setGridPosition(int x, int y);
+    sf::Vector2i getGridPosition();
     Tetromino blockO(int x, int y, sf::Color color, Gameboard* gameboard);
     Tetromino blockL(int x, int y, sf::Color color, Gameboard* gameboard);
     Tetromino blockT(int x, int y, sf::Color color, Gameboard* gameboard);
 
 private:
     std::vector<Block*> blocks;
-    int gridPositionX;
-    int gridPositionY;
+    sf::Vector2i gridPosition;
     sf::Vector2i pivotPoint;
+    sf::Vector2i pivotPointOffset;
     sf::Color color;
 };
