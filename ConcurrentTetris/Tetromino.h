@@ -7,24 +7,24 @@
 class Tetromino
 {
 public:
-    Tetromino(int x, int y, sf::Color color, Gameboard* gameboard);
+    Tetromino(int x, int y, sf::Color color);
     void addToGameBoard(Gameboard* gameboard);
     void rotateClockwise(Gameboard* board);
     void moveRight(Gameboard* board);
     void moveLeft(Gameboard* board);
-    void moveDown(Gameboard* board);
+    bool moveDown(Gameboard* board);
     void freezeToBoard(Gameboard* board);
     sf::Vector2i getPivotPoint();
     void setGridPosition(int x, int y);
     sf::Vector2i getGridPosition();
     
-    Tetromino blockI(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockL(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockJ(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockZ(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockS(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockT(int x, int y, sf::Color color, Gameboard* gameboard);
-    Tetromino blockO(int x, int y, sf::Color color, Gameboard* gameboard);
+    Tetromino blockI(int x, int y, sf::Color color);
+    Tetromino blockL(int x, int y, sf::Color color);
+    Tetromino blockJ(int x, int y, sf::Color color);
+    Tetromino blockZ(int x, int y, sf::Color color);
+    Tetromino blockS(int x, int y, sf::Color color);
+    Tetromino blockT(int x, int y, sf::Color color);
+    Tetromino blockO(int x, int y, sf::Color color);
 
 private:
     std::vector<Block*> blocks;

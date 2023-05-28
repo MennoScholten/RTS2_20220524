@@ -23,6 +23,7 @@ public:
     void close() { window.close(); }
     void clear() { window.clear(); }
     void display() { window.display(); }
+    bool setActive(bool active) { return window.setActive(active); }
 
 
 private:
