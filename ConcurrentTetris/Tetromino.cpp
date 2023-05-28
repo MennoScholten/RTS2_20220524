@@ -156,5 +156,6 @@ void Tetromino::moveLeft(Gameboard* board) {
         // Should check for collisions here
         board->moveBlock(block, newX, newY);
         block->setPosition(newX, newY);
+        
     }
 }

@@ -39,6 +39,13 @@ bool Gameboard::isOccupied(int x, int y)
 }
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {
-    Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
-    Gameboard::board[newY][newX] = block;
+
+    if (Gameboard::board[block->getPositionY()][block->getPositionX()] == block) {
+        Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
+        Gameboard::board[newY][newX] = block;
+    }
+    // Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
+    else {
+        Gameboard::board[newY][newX] = block;
+    }
 }
