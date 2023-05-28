@@ -117,6 +117,7 @@ Tetromino Tetromino::blockO(int x, int y, sf::Color color) {
     tetromino.blocks.push_back(block2);
     tetromino.blocks.push_back(block3);
     tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
     return tetromino;
 }
 
