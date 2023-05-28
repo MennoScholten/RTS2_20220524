@@ -40,12 +40,12 @@ bool Gameboard::isOccupied(int x, int y)
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {
 
-    if (Gameboard::board[block->getPositionY()][block->getPositionX()] == block) {
-        Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
-        Gameboard::board[newY][newX] = block;
+    if (this->board[block->getPositionY()][block->getPositionX()] == block) {
+        this->board[block->getPositionY()][block->getPositionX()] = nullptr;
+        this->board[newY][newX] = block;
     }
     // Gameboard::board[block->getPositionY()][block->getPositionX()] = nullptr;
     else {
-        Gameboard::board[newY][newX] = block;
+        this->board[newY][newX] = block;
     }
 }
