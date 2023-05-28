@@ -5,7 +5,7 @@ InputHandler::InputHandler() {
     
 }
 
-void InputHandler::processInput(std::vector<Player*>& players, sf::Event event) {
+void InputHandler::processInput(std::vector<Player*>& players, Gameboard* gameboard, sf::Event event) {
     static std::set<sf::Keyboard::Key> pressedKeys;
 
     if (event.type == sf::Event::KeyPressed) {
@@ -20,6 +20,7 @@ void InputHandler::processInput(std::vector<Player*>& players, sf::Event event) 
             }
             if (pressedKeys.count(player->getRotateKey())) {
                 std::cout << "Rotate " << player << "\n";
+                if (player->getActiveTetrimino() != nullptr) player->getActiveTetrimino()->rotateClockwise(gameboard);
             }
             if (pressedKeys.count(player->getDropKey())) {
                 std::cout << "Drop " << player << "\n";

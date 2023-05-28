@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Gameboard.h"
+#include "Block.h"
+#include <iostream>
 
 class Window
 {

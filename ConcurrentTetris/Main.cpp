@@ -4,12 +4,14 @@
 #include <vector>
 #include "Player.h"
 #include "InputHandler.h"
+#include "Block.h"
+#include "Tetromino.h"
 
 int main()
 {
     /* Should be obtained from main menu */
-	int gameboardWidth = 20;
-	int gameboardHeight = 20;
+	int gameboardWidth = 10;
+	int gameboardHeight = 10;
     int playerCount = 2;
     std::vector<Player*> players;
     
@@ -21,36 +23,19 @@ int main()
         players.push_back(&player2);
     }
 
-
     // Init
     InputHandler inputHandler;
 	Gameboard gameBoard(gameboardWidth, gameboardHeight);
     Block gameBlockReference(0, 0, sf::Color::Blue);
     Block gameBlockReference2(0, 0, sf::Color::Red);
 
-    // Add block to board
-    gameBoard.addBlock(0, 0, &gameBlockReference);
-    gameBoard.addBlock(0, 2, &gameBlockReference2);
-	
-    Tetromino* testTetro1 = new Tetromino(150.f, 150.f, Tetromino::blockType::Z);
-    testTetro1->rotateTetromino(90.f);
+    // Tetromino tetrominoO = tetrominoO.blockO(3, 4, sf::Color::Blue, &gameBoard);
+    // player1.setActiveTetrimino(&tetrominoO);
+    // Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::Blue, &gameBoard);
+    // player1.setActiveTetrimino(&tetrominoL);
+    // Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Blue, &gameBoard);
+    // player1.setActiveTetrimino(&tetrominoT);
 
-    Tetromino* testTetro2 = new Tetromino(350.f, 150.f, Tetromino::blockType::L);
-    testTetro2->rotateTetromino(90.f);
-
-    Tetromino* testTetro3 = new Tetromino(450.f, 350.f, Tetromino::blockType::L);
-    testTetro3->rotateTetromino(90.f);
-
-    Tetromino* testTetro4 = new Tetromino(150.f, 450.f, Tetromino::blockType::I);
-    testTetro4->rotateTetromino(90.f);
-
-    // Add block to board
-    gameBoard.addBlock(0, 0, &gameBlockReference);
-    gameBoard.addBlock(0, 2, &gameBlockReference2);
-    gameBoard.addTetromino(testTetro1);
-    gameBoard.addTetromino(testTetro2);
-    gameBoard.addTetromino(testTetro3);
-    gameBoard.addTetromino(testTetro4);
 
 	Window gameWindow(
         gameboardWidth * gameBlockReference.getWidth(), 
@@ -60,7 +45,7 @@ int main()
 
     while (gameWindow.isOpen()) {
         while (gameWindow.pollEvent(event)) {
-            inputHandler.processInput(players, event);
+            inputHandler.processInput(players, &gameBoard, event);
             if (event.type == sf::Event::Closed) {
                 gameWindow.close();
             }
