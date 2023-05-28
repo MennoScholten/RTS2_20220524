@@ -12,6 +12,8 @@ public:
     void rotateClockwise(Gameboard* board);
     void moveRight(Gameboard* board);
     void moveLeft(Gameboard* board);
+    void moveDown(Gameboard* board);
+    void freezeToBoard(Gameboard* board);
     sf::Vector2i getPivotPoint();
     void setGridPosition(int x, int y);
     sf::Vector2i getGridPosition();

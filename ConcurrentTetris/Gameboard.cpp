@@ -28,14 +28,29 @@ void Gameboard::addBlock(int x, int y, Block* blockObject) {
 }
 
 bool Gameboard::isOccupied(int x, int y)
+/* Used for drawing purposes */
 {
     if (x < 0 || x >= Gameboard::board.size() || y < 0 || y >= Gameboard::board[0].size())
     {
         // Invalid indices, consider it as occupied
         return true;
     }
+    return this->board[x][y] != nullptr;
+}
 
-    return Gameboard::board[x][y] != nullptr;
+bool Gameboard::checkCollision(int x, int y)
+{
+    if (x < 0 || x >= Gameboard::board.size() || y < 0 || y >= Gameboard::board[0].size())
+    {
+        // Invalid indices, consider it as occupied
+        return true;
+    }
+    // The cell is a null pointer means its empty
+    if (this->board[x][y] == nullptr) {
+        return false;
+    }
+    // If not nullpointer, check if it is a player-controlled block
+    return this->board[x][y]->getAlive() == false;
 }
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {

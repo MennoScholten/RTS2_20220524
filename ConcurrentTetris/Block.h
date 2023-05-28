@@ -18,6 +18,8 @@ public:
     // Accessors
     int getWidth() const;
     int getHeight() const;
+    bool getAlive();
+    void setAlive(bool alive);
     sf::Color getColor() const;
 
     // Modifiers

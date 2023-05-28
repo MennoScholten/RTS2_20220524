@@ -17,6 +17,7 @@ public:
     int getColumns() const;
     int getRows() const;
     bool isOccupied(int x, int y);
+    bool checkCollision(int x, int y);
     void addBlock(int x, int y, Block* blockObject);
     void moveBlock(Block* block, int newRow, int newColumn);
 };

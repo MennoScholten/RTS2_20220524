@@ -6,7 +6,7 @@ Block::Block(int x, int y, sf::Color blockColor)
     positionX = x;
     positionY = y;
     color = blockColor;
-    isAlive = false;
+    isAlive = true;
 }
 
 int Block::getWidth() const
@@ -17,6 +17,16 @@ int Block::getWidth() const
 int Block::getHeight() const
 {
     return Block::height;
+}
+
+bool Block::getAlive()
+{
+    return this->isAlive;
+}
+
+void Block::setAlive(bool alive)
+{
+    this->isAlive = alive;
 }
 
 sf::Color Block::getColor() const
