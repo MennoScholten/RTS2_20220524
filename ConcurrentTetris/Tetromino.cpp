@@ -45,10 +45,10 @@ Tetromino Tetromino::blockL(int x, int y, sf::Color color, Gameboard* gameboard)
 
 Tetromino Tetromino::blockT(int x, int y, sf::Color color, Gameboard* gameboard) {
     Tetromino tetromino(x, y, color, gameboard);
-    Block* block1 = new Block(x, y, color);
-    Block* block2 = new Block(x + 1, y, color);
-    Block* block3 = new Block(x + 1, y + 1, color);
-    Block* block4 = new Block(x + 2, y, color);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 1, y + 2, color);
+    Block* block4 = new Block(x + 2, y + 1, color);
     tetromino.pivotPoint.x = x + 1;
     tetromino.pivotPoint.y = y;
     tetromino.blocks.push_back(block1);
