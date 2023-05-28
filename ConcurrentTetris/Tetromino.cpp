@@ -9,6 +9,108 @@ void Tetromino::addToGameBoard(Gameboard* gameboard) {
     }
 }
 
+Tetromino Tetromino::blockI(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x, y, color);
+    Block* block2 = new Block(x + 1, y, color);
+    Block* block3 = new Block(x + 2, y, color);
+    Block* block4 = new Block(x + 3, y, color);
+    tetromino.pivotPointOffset.x = 0;
+    tetromino.pivotPointOffset.y = 0;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
+Tetromino Tetromino::blockL(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x, y, color);
+    Block* block2 = new Block(x, y + 1, color);
+    Block* block3 = new Block(x + 1, y + 1, color);
+    Block* block4 = new Block(x + 2, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
+Tetromino Tetromino::blockJ(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 2, y + 1, color);
+    Block* block4 = new Block(x + 2, y + 0, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
+Tetromino Tetromino::blockZ(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 1, y, color);
+    Block* block4 = new Block(x + 2, y, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
+Tetromino Tetromino::blockS(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x + 2, y + 2, color);
+    Block* block2 = new Block(x + 1, y + 2, color);
+    Block* block3 = new Block(x + 1, y + 1, color);
+    Block* block4 = new Block(x, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
+Tetromino Tetromino::blockT(int x, int y, sf::Color color, Gameboard* gameboard) {
+    Tetromino tetromino(x, y, color, gameboard);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 1, y , color);
+    Block* block4 = new Block(x + 2, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    tetromino.addToGameBoard(gameboard);
+    return tetromino;
+}
+
 Tetromino Tetromino::blockO(int x, int y, sf::Color color, Gameboard* gameboard) {
     Tetromino tetromino(x, y, color, gameboard);
     Block* block1 = new Block(x, y, color);
@@ -26,39 +128,6 @@ Tetromino Tetromino::blockO(int x, int y, sf::Color color, Gameboard* gameboard)
     return tetromino;
 }
 
-Tetromino Tetromino::blockL(int x, int y, sf::Color color, Gameboard* gameboard) {
-    Tetromino tetromino(x, y, color, gameboard);
-    Block* block1 = new Block(x, y + 1, color);
-    Block* block2 = new Block(x + 1, y + 1, color);
-    Block* block3 = new Block(x + 2, y + 1, color);
-    Block* block4 = new Block(x + 2, y + 2, color);
-    tetromino.pivotPointOffset.x = 1;
-    tetromino.pivotPointOffset.y = 1;
-    tetromino.blocks.push_back(block1);
-    tetromino.blocks.push_back(block2);
-    tetromino.blocks.push_back(block3);
-    tetromino.blocks.push_back(block4);
-    tetromino.setGridPosition(x, y);
-    tetromino.addToGameBoard(gameboard);
-    return tetromino;
-}
-
-Tetromino Tetromino::blockT(int x, int y, sf::Color color, Gameboard* gameboard) {
-    Tetromino tetromino(x, y, color, gameboard);
-    Block* block1 = new Block(x, y + 1, color);
-    Block* block2 = new Block(x + 1, y + 1, color);
-    Block* block3 = new Block(x + 1, y + 2, color);
-    Block* block4 = new Block(x + 2, y + 1, color);
-    tetromino.pivotPointOffset.x = 1;
-    tetromino.pivotPointOffset.y = 1;
-    tetromino.blocks.push_back(block1);
-    tetromino.blocks.push_back(block2);
-    tetromino.blocks.push_back(block3);
-    tetromino.blocks.push_back(block4);
-    tetromino.setGridPosition(x, y);
-    tetromino.addToGameBoard(gameboard);
-    return tetromino;
-}
 
 sf::Vector2i Tetromino::getPivotPoint() {
     this->pivotPoint.x = this->gridPosition.x + this->pivotPointOffset.x;

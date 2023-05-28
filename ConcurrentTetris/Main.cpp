@@ -29,12 +29,21 @@ int main()
     Block gameBlockReference(0, 0, sf::Color::Blue);
     Block gameBlockReference2(0, 0, sf::Color::Red);
 
-    // Tetromino tetrominoO = tetrominoO.blockO(3, 4, sf::Color::Blue, &gameBoard);
-    // player1.setActiveTetrimino(&tetrominoO);
-    Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::Blue, &gameBoard);
-    player1.setActiveTetrimino(&tetrominoL);
-    // Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Blue, &gameBoard);
-    // player1.setActiveTetrimino(&tetrominoT);
+    
+    //Tetromino tetrominoI = tetrominoI.blockI(2, 2, sf::Color::Cyan, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoI);
+    //Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::White, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoL);
+    //Tetromino tetrominoJ = tetrominoJ.blockJ(2, 2, sf::Color::Blue, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoJ);
+    //Tetromino tetrominoZ = tetrominoZ.blockZ(2, 2, sf::Color::Green, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoZ);
+    //Tetromino tetrominoS = tetrominoS.blockS(2, 2, sf::Color::Red, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoS);
+    //Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Magenta, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoT);
+    //Tetromino tetrominoO = tetrominoO.blockO(2, 2, sf::Color::Yellow, &gameBoard);
+    //player1.setActiveTetrimino(&tetrominoO);
 
 
 	Window gameWindow(
