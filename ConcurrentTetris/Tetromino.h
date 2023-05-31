@@ -1,44 +1,35 @@
 #pragma once
-#include "Block.h"
-#include "SFML/Graphics.hpp"
+#include "Gameboard.h"
 #include <vector>
+#include <SFML/Graphics.hpp>
+#include "Block.h"
 
-class Tetromino : public sf::Drawable
+class Tetromino
 {
-	std::vector<Block*> blockArray;
-	float originX = 0.0;    // X-axis Origin of the shape 
-	float originY = 0.0;    // Y-axis Origin of the shape
-
-	float positionX = 0.0;  // X-axis pixel position of the shape
-	float positionY = 0.0;  // Y-axis Pixel position of the shape
-
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; // Virtual function to draw custom classes 
-
-	void setupIBlock(float x, float y);
-	void setupLBlock(float x, float y);
-	void setupJBlock(float x, float y);
-	void setupZBlock(float x, float y);
-	void setupSBlock(float x, float y);
-	void setupTBlock(float x, float y);
-	void setupBBlock(float x, float y);
-
 public:
-	enum blockType { I, L, J, Z, S, T, B }; // Enum for holding blocktypes
+    Tetromino(int x, int y, sf::Color color);
+    void addToGameBoard(Gameboard* gameboard);
+    void rotateClockwise(Gameboard* board);
+    void moveRight(Gameboard* board);
+    void moveLeft(Gameboard* board);
+    bool moveDown(Gameboard* board);
+    void freezeToBoard(Gameboard* board);
+    sf::Vector2i getPivotPoint();
+    void setGridPosition(int x, int y);
+    sf::Vector2i getGridPosition();
+    
+    Tetromino blockI(int x, int y, sf::Color color);
+    Tetromino blockL(int x, int y, sf::Color color);
+    Tetromino blockJ(int x, int y, sf::Color color);
+    Tetromino blockZ(int x, int y, sf::Color color);
+    Tetromino blockS(int x, int y, sf::Color color);
+    Tetromino blockT(int x, int y, sf::Color color);
+    Tetromino blockO(int x, int y, sf::Color color);
 
-	// Constructors
-	Tetromino();
-	Tetromino(blockType type);
-	Tetromino(float posX, float posY, blockType type);
-	~Tetromino();
-
-	std::vector<Block*> getBlocks();
-
-	void getPosition(float& x, float& y);
-
-	void setPosition(float x, float y);
-	void setColor(const sf::Color blockColor);
-
-	void moveTetromino(float x, float y);
-	void rotateTetromino(float angleDeg);
-
+private:
+    std::vector<Block*> blocks;
+    sf::Vector2i gridPosition;
+    sf::Vector2i pivotPoint;
+    sf::Vector2i pivotPointOffset;
+    sf::Color color;
 };

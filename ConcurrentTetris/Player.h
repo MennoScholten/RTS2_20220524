@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Tetromino.h"
 class Player
 {
 public:
@@ -10,9 +11,12 @@ public:
     sf::Keyboard::Key getMoveRightKey();
     sf::Keyboard::Key getRotateKey();
     sf::Keyboard::Key getDropKey();
+    void setActiveTetrimino(Tetromino* tetromino);
+    Tetromino* getActiveTetrimino();
 
 private:
     int score = 0;
+    Tetromino* activeTetromino;
     sf::Color playerColor;
     sf::Keyboard::Key moveLeftKey;
     sf::Keyboard::Key moveRightKey;

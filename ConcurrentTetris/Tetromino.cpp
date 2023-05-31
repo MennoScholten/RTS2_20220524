@@ -1,197 +1,270 @@
 #include "Tetromino.h"
-
-Tetromino::Tetromino()
-{
-	//Block a(0.f, 0.f, 0.f, 0.f, sf::Color::Cyan);
-	this->blockArray.push_back(new Block(0.f, 0.f, sf::Color::Cyan));
+#include <iostream>
+Tetromino::Tetromino(int x, int y, sf::Color color) {
 }
 
-Tetromino::Tetromino(blockType type)
-{
-	switch (type) {
-	case I:
-		setupIBlock(100, 100);
-	case L:
-		setupLBlock(100, 100);
-	case J:
-		setupJBlock(100, 100);
-	case Z:
-		setupZBlock(100, 100);
-	case S:
-		setupSBlock(100, 100);
-	case T:
-		setupTBlock(100, 100);
-	case B:
-		setupBBlock(100, 100);
-	}
+void Tetromino::addToGameBoard(Gameboard* gameboard) {
+    for (Block* block : this->blocks) {
+        gameboard->addBlock(block->getPositionX(), block->getPositionY(), block);
+    }
 }
 
-Tetromino::Tetromino(float posX, float posY, blockType type)
-{
-	this->positionX = posX;
-	this->positionY = posY;
-	switch (type) {
-	case I:
-		setupIBlock(this->positionX, this->positionY);
-		break;
-	case L:
-		setupLBlock(this->positionX, this->positionY);
-		break;
-	case J:
-		setupJBlock(this->positionX, this->positionY);
-		break;
-	case Z:
-		setupZBlock(this->positionX, this->positionY);
-		break;
-	case S:
-		setupSBlock(this->positionX, this->positionY);
-		break;
-	case T:
-		setupTBlock(this->positionX, this->positionY);
-		break;
-	case B:
-		setupBBlock(this->positionX, this->positionY);
-		break;
-	}
-
+Tetromino Tetromino::blockI(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 2, y + 1, color);
+    Block* block4 = new Block(x + 3, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-Tetromino::~Tetromino()
-{
-	this->blockArray.clear();
+Tetromino Tetromino::blockL(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y, color);
+    Block* block2 = new Block(x, y + 1, color);
+    Block* block3 = new Block(x + 1, y + 1, color);
+    Block* block4 = new Block(x + 2, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-std::vector<Block*> Tetromino::getBlocks()
-{
-	return this->blockArray;
+Tetromino Tetromino::blockJ(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 2, y + 1, color);
+    Block* block4 = new Block(x + 2, y + 0, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-
-void Tetromino::getPosition(float& x, float& y)
-{
-	x = this->positionX;
-	y = this->positionY;
+Tetromino Tetromino::blockZ(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 1, y, color);
+    Block* block4 = new Block(x + 2, y, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-void Tetromino::setPosition(float x, float y)
-{
-	this->positionX = x;
-	this->positionY = y;
+Tetromino Tetromino::blockS(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x + 2, y + 2, color);
+    Block* block2 = new Block(x + 1, y + 2, color);
+    Block* block3 = new Block(x + 1, y + 1, color);
+    Block* block4 = new Block(x, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-void Tetromino::setColor(const sf::Color blockColor)
-{
-	for (int i = 0; i < this->blockArray.size(); i++) {
-		this->blockArray[i]->setColor(blockColor);
-	}
+Tetromino Tetromino::blockT(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y + 1, color);
+    Block* block2 = new Block(x + 1, y + 1, color);
+    Block* block3 = new Block(x + 1, y , color);
+    Block* block4 = new Block(x + 2, y + 1, color);
+    tetromino.pivotPointOffset.x = 1;
+    tetromino.pivotPointOffset.y = 1;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-void Tetromino::moveTetromino(float x, float y)
-{
-	for (int i = 0; i < this->blockArray.size(); i++) {
-		this->blockArray[i]->moveBlock(x, y);
-	}
+Tetromino Tetromino::blockO(int x, int y, sf::Color color) {
+    Tetromino tetromino(x, y, color);
+    Block* block1 = new Block(x, y, color);
+    Block* block2 = new Block(x + 1, y, color);
+    Block* block3 = new Block(x, y + 1, color);
+    Block* block4 = new Block(x + 1, y + 1, color);
+    tetromino.pivotPointOffset.x = 0;
+    tetromino.pivotPointOffset.y = 0;
+    tetromino.blocks.push_back(block1);
+    tetromino.blocks.push_back(block2);
+    tetromino.blocks.push_back(block3);
+    tetromino.blocks.push_back(block4);
+    tetromino.setGridPosition(x, y);
+    return tetromino;
 }
 
-void Tetromino::rotateTetromino(float angleDeg)
-{
-	for (int i = 0; i < this->blockArray.size(); i++) {
-		this->blockArray[i]->rotateBlock(angleDeg);
-	}
+sf::Vector2i Tetromino::getPivotPoint() {
+    this->pivotPoint.x = this->gridPosition.x + this->pivotPointOffset.x;
+    this->pivotPoint.y = this->gridPosition.y + this->pivotPointOffset.y;
+    return this->pivotPoint;
 }
 
-void Tetromino::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	for (int i = 0; i < this->blockArray.size(); i++) {
-		target.draw(*blockArray[i]);
-	}
+void Tetromino::setGridPosition(int x, int y) {
+    this->gridPosition.x = x;
+    this->gridPosition.y = y;
 }
 
-void Tetromino::setupIBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Cyan));
-
-	this->blockArray[0]->setOrigin(2 * this->blockArray[0]->getWidth(), 1 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(1 * this->blockArray[1]->getWidth(), 1 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(0 * this->blockArray[2]->getWidth(), 1 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-1 * this->blockArray[3]->getWidth(), 1 * this->blockArray[3]->getHeight());
-}											   
-											   
-void Tetromino::setupLBlock(float x, float y)  
-{											   
-	this->blockArray.push_back(new Block(x, y, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, sf::Color::White));
-	this->blockArray.push_back(new Block(x, y, sf::Color::White));
-
-	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(1.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
-}											   
-											   
-void Tetromino::setupJBlock(float x, float y)  
-{											   
-	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Blue));
-
-	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 0.5 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(-0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 1.5 * this->blockArray[3]->getHeight());
-}											   
-											   
-void Tetromino::setupZBlock(float x, float y)  
-{											   
-	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Green));
-
-	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 0.5 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 1.5 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 1.5 * this->blockArray[3]->getHeight());
-}											   
-											   
-void Tetromino::setupSBlock(float x, float y)  
-{											   
-	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Red));
-	this->blockArray[0]->setOrigin(1.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(0.5 * this->blockArray[1]->getWidth(), 1.5 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
+sf::Vector2i Tetromino::getGridPosition() {
+    return this->gridPosition;
 }
 
-void Tetromino::setupTBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Magenta));
+void Tetromino::rotateClockwise(Gameboard* board) {
+    /* Something cross between SRS and TGM rotation system 
+    https://tetris.wiki/Arika_Rotation_System
+    https://tetris.fandom.com/wiki/TGM_Rotation */
 
-	this->blockArray[0]->setOrigin(0.5 * this->blockArray[0]->getWidth(), 1.5 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(1.5 * this->blockArray[1]->getWidth(), 0.5 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(0.5 * this->blockArray[2]->getWidth(), 0.5 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(-0.5 * this->blockArray[3]->getWidth(), 0.5 * this->blockArray[3]->getHeight());
+    // Store the current blocks' positions for potential rollback when checking for collisions
+    std::vector<std::pair<int, int>> oldPositions;
+    for (auto block : blocks) {
+        oldPositions.push_back(std::make_pair(block->getPositionX(), block->getPositionY()));
+    }
+    this->getPivotPoint(); // Update pivot
+    // Can't rotate (O block)
+    if (this->pivotPointOffset.x == 0 && this->pivotPointOffset.y == 0) {
+        return;
+    }
+    for (auto block : blocks) {
+        int relativeX = block->getPositionX() - this->pivotPoint.x;
+        int relativeY = block->getPositionY() - this->pivotPoint.y;
+        int newPositionX = this->pivotPoint.x - relativeY;
+        int newPositionY = this->pivotPoint.y + relativeX;
+
+        // Check for collisions
+        if (board->checkCollision(newPositionX, newPositionY)) {
+            // Reset position
+            // TODO: Wallkick
+            for (int i = 0; i < blocks.size(); i++) {
+                board->moveBlock(blocks[i], oldPositions[i].first, oldPositions[i].second);
+                blocks[i]->setPosition(oldPositions[i].first, oldPositions[i].second);
+            }
+            return;
+        }
+        board->moveBlock(block, newPositionX, newPositionY);
+        block->setPosition(newPositionX, newPositionY);
+    }
 }
 
-void Tetromino::setupBBlock(float x, float y)
-{
-	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
-	this->blockArray.push_back(new Block(x, y, sf::Color::Yellow));
-	this->blockArray[0]->setOrigin(1 * this->blockArray[0]->getWidth(), 1 * this->blockArray[0]->getHeight());
-	this->blockArray[1]->setOrigin(0 * this->blockArray[1]->getWidth(), 1 * this->blockArray[1]->getHeight());
-	this->blockArray[2]->setOrigin(1 * this->blockArray[2]->getWidth(), 0 * this->blockArray[2]->getHeight());
-	this->blockArray[3]->setOrigin(0 * this->blockArray[3]->getWidth(), 0 * this->blockArray[3]->getHeight());
+void Tetromino::moveRight(Gameboard* board) {
+
+    // Store the current blocks' positions for potential rollback when checking for collisions
+    std::vector<std::pair<int, int>> oldPositions;
+    for (auto block : blocks) {
+        oldPositions.push_back(std::make_pair(block->getPositionX(), block->getPositionY()));
+    }
+    for (auto block : blocks) {
+        int relativeX = block->getPositionX();
+        int relativeY = block->getPositionY();
+        int newX = relativeX + 1;
+        int newY = relativeY;
+
+        // Check for collisions
+        if (board->checkCollision(newX, newY)) {
+            // Reset position
+            for (int i = 0; i < blocks.size(); i++) {
+                blocks[i]->setPosition(oldPositions[i].first, oldPositions[i].second);
+                board->moveBlock(blocks[i], oldPositions[i].first, oldPositions[i].second);
+            }
+            return;
+        }
+        board->moveBlock(block, newX, newY);
+        block->setPosition(newX, newY);
+    }
+    // Update block grid position
+    this->setGridPosition(this->gridPosition.x + 1, this->gridPosition.y + 0);
+}
+
+void Tetromino::moveLeft(Gameboard* board) {
+
+    // Store the current blocks' positions for potential rollback when checking for collisions
+    std::vector<std::pair<int, int>> oldPositions;
+    for (auto block : blocks) {
+        oldPositions.push_back(std::make_pair(block->getPositionX(), block->getPositionY()));
+    }
+
+    for (auto block : blocks) {
+        int relativeX = block->getPositionX();
+        int relativeY = block->getPositionY();
+        int newX = relativeX - 1;
+        int newY = relativeY;
+
+        // Check for collisions
+        if (board->checkCollision(newX, newY)) {
+            // Reset position
+            for (int i = 0; i < blocks.size(); i++) {
+                blocks[i]->setPosition(oldPositions[i].first, oldPositions[i].second);
+                board->moveBlock(blocks[i], oldPositions[i].first, oldPositions[i].second);
+            }
+            return; 
+        }
+        board->moveBlock(block, newX, newY);
+        block->setPosition(newX, newY);
+        
+    }
+    this->setGridPosition(this->gridPosition.x - 1, this->gridPosition.y + 0);
+}
+
+bool Tetromino::moveDown(Gameboard* board) {
+    /**
+    * Returns true if move was legal, false if block can not move down any more.
+    */
+
+    // Store the current blocks' positions for potential rollback when checking for collisions
+    std::vector<std::pair<int, int>> oldPositions;
+    for (auto block : blocks) {
+        oldPositions.push_back(std::make_pair(block->getPositionX(), block->getPositionY()));
+    }
+    for (auto block : blocks) {
+        int relativeX = block->getPositionX();
+        int relativeY = block->getPositionY();
+        int newX = relativeX;
+        int newY = relativeY + 1;
+
+        // Check for collisions
+        if (board->checkCollision(newX, newY)) {
+            // Reset position
+            for (int i = 0; i < blocks.size(); i++) {
+                blocks[i]->setPosition(oldPositions[i].first, oldPositions[i].second);
+                board->moveBlock(blocks[i], oldPositions[i].first, oldPositions[i].second);
+            }
+            // return bool false if code reaced here, game thread will freeze the tetromino.
+            return false;
+        }
+        board->moveBlock(block, newX, newY);
+        block->setPosition(newX, newY);
+    }
+    // Update block grid position
+    this->setGridPosition(this->gridPosition.x, this->gridPosition.y + 1);
+    return true;
+}
+
+void Tetromino::freezeToBoard(Gameboard* board) {
+
 }

@@ -3,6 +3,7 @@
 
 Player::Player(const sf::Color& color, sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key rotateKey, sf::Keyboard::Key dropKey)
 {
+    this->activeTetromino = nullptr;
     Player::playerColor = color;
     Player::moveLeftKey = leftKey;
     Player::moveRightKey = rightKey;
@@ -36,5 +37,15 @@ sf::Keyboard::Key Player::getRotateKey() {
 
 sf::Keyboard::Key Player::getDropKey() {
     return Player::dropKey;
+}
+
+void Player::setActiveTetrimino(Tetromino* tetromino)
+{
+    this->activeTetromino = tetromino;
+}
+
+Tetromino* Player::getActiveTetrimino()
+{
+    return this->activeTetromino;
 }
 
