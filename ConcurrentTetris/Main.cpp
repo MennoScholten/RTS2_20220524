@@ -9,32 +9,56 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
-#include <queue>
+#include <random>
 
 
-void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler)
+void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler, int gameBoardWidth)
 {
-    const int GAME_TICK_DURATION = 500;
+    const int GAME_TICK_DURATION = 100;
 
     // Only singleplayer tested
     Tetromino tetrominoI = tetrominoI.blockI(2, 2, sf::Color::Cyan);
-    Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Blue);
+    Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Magenta);
     Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::White);
-    std::queue<Tetromino*> testQueue;
-    testQueue.push(&tetrominoI);
-    testQueue.push(&tetrominoT);
-    testQueue.push(&tetrominoL);
+    Tetromino tetrominoJ = tetrominoL.blockJ(2, 2, sf::Color::Blue);
+    Tetromino tetrominoZ = tetrominoZ.blockZ(2, 2, sf::Color::Green);
+    Tetromino tetrominoS = tetrominoS.blockS(2, 2, sf::Color::Red);
+    Tetromino tetrominoO = tetrominoO.blockO(2, 2, sf::Color::Yellow);
+
+    Tetromino* tetrominoListPlayer1[] = {&tetrominoI, &tetrominoT, &tetrominoL, &tetrominoJ, &tetrominoZ, &tetrominoS, &tetrominoO};
+
+    // Only singleplayer tested
+    Tetromino tetrominoI2 = tetrominoI2.blockI(18, 2, sf::Color::Cyan);
+    Tetromino tetrominoT2 = tetrominoT2.blockT(18, 2, sf::Color::Magenta);
+    Tetromino tetrominoL2 = tetrominoL2.blockL(18, 2, sf::Color::White);
+    Tetromino tetrominoJ2 = tetrominoL2.blockJ(18, 2, sf::Color::Blue);
+    Tetromino tetrominoZ2 = tetrominoZ2.blockZ(18, 2, sf::Color::Green);
+    Tetromino tetrominoS2 = tetrominoS2.blockS(18, 2, sf::Color::Red);
+    Tetromino tetrominoO2 = tetrominoO2.blockO(18, 2, sf::Color::Yellow);
+
+    Tetromino* tetrominoListPlayer2[] = { &tetrominoI2, &tetrominoT2, &tetrominoL2, &tetrominoJ2, &tetrominoZ2, &tetrominoS2, &tetrominoO2};
 
     while (true) {
         // if player doesnt have an active block, spawn a block for player
-        for (Player* player : players) {
-            if (player->getActiveTetrimino() == nullptr) {
-                Tetromino* tetromino = testQueue.front();
-                tetromino->addToGameBoard(board);
-                player->setActiveTetrimino(tetromino);
-                testQueue.pop();
+        for (int i = 0; i < players.size(); i++) {
+            if (i == 0) {
+                if (players[i]->getActiveTetrimino() == nullptr) {
+                    Tetromino* tetromino = tetrominoListPlayer1[std::rand() % 7];
+                    tetromino->addToGameBoard(board);
+                    players[i]->setActiveTetrimino(tetromino);
+                }
+            }
+
+            else if(i==1) {
+                if (players[i]->getActiveTetrimino() == nullptr) {
+                    Tetromino* tetromino = tetrominoListPlayer2[std::rand() % 7];
+                    tetromino->addToGameBoard(board);
+                    players[i]->setActiveTetrimino(tetromino);
+                }
             }
         }
+        
+
         // Game tick move down
         std::this_thread::sleep_for(std::chrono::milliseconds(GAME_TICK_DURATION));
 
@@ -74,7 +98,7 @@ int main()
     /* Should be obtained from main menu */
 	int gameboardWidth = 22;
 	int gameboardHeight = 22;
-    int playerCount = 1;
+    int playerCount = 2;
     std::vector<Player*> players;
     
     Player player1(sf::Color::Blue, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
@@ -100,7 +124,7 @@ int main()
 	sf::Event event;
 
     // Start the logic thread
-    std::thread gameThread(gameLogicThread, players, &gameBoard, &inputHandler);
+    std::thread gameThread(gameLogicThread, players, &gameBoard, &inputHandler, gameboardWidth);
 
     while (gameWindow.isOpen()) {
         while (gameWindow.pollEvent(event)) {
