@@ -14,10 +14,7 @@ jobs:
       run: sudo apt-get install cppcheck -y
 
     - name: Run cppcheck
-      run: cppcheck --force --enable=all --error-exitcode=1 . | tee cppcheck_results.txt
-      
-    - name: Print cppcheck results
-      run: cat cppcheck_results.txt
+      run: cppcheck --force --enable=all --error-exitcode=1 --output-file=cppcheck_results.txt .
 
     - name: Archive cppcheck results
       uses: actions/upload-artifact@v2
