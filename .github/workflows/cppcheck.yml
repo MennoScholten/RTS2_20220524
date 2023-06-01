@@ -10,9 +10,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Cppcheck
+    - name: Install cppcheck
       run: sudo apt-get install cppcheck -y
 
-    - name: Run Cppcheck
-      run: cppcheck --force --enable=all --error-exitcode=1 .
+    - name: Run cppcheck
+      run: cppcheck --force --enable=all --error-exitcode=1 . | tee cppcheck_results.txt
+      
+    - name: Print cppcheck results
+      run: cat cppcheck_results.txt
+
+    - name: Archive cppcheck results
+      uses: actions/upload-artifact@v2
+      with:
+        name: Cppcheck Results
+        path: cppcheck_results.txt
 
