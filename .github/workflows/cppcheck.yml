@@ -15,8 +15,13 @@ jobs:
 
     - name: Run cppcheck
       run: cppcheck --force --enable=all --error-exitcode=1 --output-file=cppcheck_results.txt .
+      
+    - name: Print cppcheck results
+      if: success() || failure()
+      run: cat cppcheck_results.txt
 
     - name: Archive cppcheck results
+      if: failure()
       uses: actions/upload-artifact@v2
       with:
         name: Cppcheck Results
