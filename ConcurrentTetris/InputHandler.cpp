@@ -25,7 +25,7 @@ void InputHandler::processInput(std::vector<Player*>& players, Gameboard* gamebo
                 if (player->getActiveTetrimino() != nullptr) player->getActiveTetrimino()->rotateClockwise(gameboard);
             }
             if (pressedKeys.count(player->getDropKey())) {
-                std::cout << "Drop " << player << "\n";
+                if (player->getActiveTetrimino() != nullptr) player->getActiveTetrimino()->moveDrop(gameboard);
             }
         }
     }

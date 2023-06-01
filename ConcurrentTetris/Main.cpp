@@ -7,32 +7,32 @@
 #include "Block.h"
 #include "Tetromino.h"
 #include <thread>
-#include <mutex>
 #include <chrono>
 #include <queue>
+#include <mutex>
 
+
+std::recursive_mutex gameboardMutex;
 
 void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler)
 {
-    const int GAME_TICK_DURATION = 500;
-
-    // Only singleplayer tested
-    Tetromino tetrominoI = tetrominoI.blockI(2, 2, sf::Color::Cyan);
-    Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Blue);
-    Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::White);
-    std::queue<Tetromino*> testQueue;
-    testQueue.push(&tetrominoI);
-    testQueue.push(&tetrominoT);
-    testQueue.push(&tetrominoL);
+    const int GAME_TICK_DURATION = 300;
 
     while (true) {
         // if player doesnt have an active block, spawn a block for player
         for (Player* player : players) {
             if (player->getActiveTetrimino() == nullptr) {
-                Tetromino* tetromino = testQueue.front();
-                tetromino->addToGameBoard(board);
+                Tetromino* tetromino = new Tetromino();
+                sf::Color color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
+                std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
+                tetromino->createRandomTetromino(board->getColumns()/2, 0, color);
+                std::lock_guard<std::recursive_mutex> lock2(gameboardMutex);
+                bool gameOver = tetromino->addToGameBoard(board);
+                if (!gameOver) {
+                    std::cout << "Game Over!";
+                    return;
+                }
                 player->setActiveTetrimino(tetromino);
-                testQueue.pop();
             }
         }
         // Game tick move down
@@ -42,38 +42,29 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
         for (Player* player : players) {
             Tetromino* activeTetrimino = player->getActiveTetrimino();
             if (activeTetrimino != nullptr) {
+                std::lock_guard<std::recursive_mutex> lock3(gameboardMutex);
                 bool wasBlockMoved = activeTetrimino->moveDown(board);
                 std::cout << "Move Down: " << wasBlockMoved << "\n";
                 if (wasBlockMoved == false) {
                     player->setActiveTetrimino(nullptr);
-                    // Freeze the block here
+                    std::lock_guard<std::recursive_mutex> lock4(gameboardMutex);
+                    activeTetrimino->freezeToBoard(board);
+                    delete activeTetrimino;
+                    
                 }
             }
+            std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
+            board->checkFilledRows();
         }
-        // Tetromino tetrominoI = tetrominoI.blockI(2, 2, sf::Color::Cyan, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoI);
-        //Tetromino tetrominoL = tetrominoL.blockL(2, 2, sf::Color::White, &gameBoard);
-        //player1.setActiveTetrimino(&tetrominoL);
-        // Tetromino tetrominoJ = tetrominoJ.blockJ(2, 2, sf::Color::Blue, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoJ);
-        // Tetromino tetrominoZ = tetrominoZ.blockZ(2, 2, sf::Color::Green, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoZ);
-        // Tetromino tetrominoS = tetrominoS.blockS(2, 2, sf::Color::Red, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoS);
-        // Tetromino tetrominoT = tetrominoT.blockT(2, 2, sf::Color::Magenta, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoT);
-        // Tetromino tetrominoO = tetrominoO.blockO(2, 2, sf::Color::Yellow, &gameBoard);
-        // player1.setActiveTetrimino(&tetrominoO);
-        // 
-        // Here should be some sort of randomly suffled tetromino object queue
     }
 }
 
 int main()
 {
     /* Should be obtained from main menu */
-	int gameboardWidth = 22;
-	int gameboardHeight = 22;
+    // TODO: Non-square dimensions are broken
+	int gameboardWidth = 14;
+	int gameboardHeight = 14;
     int playerCount = 1;
     std::vector<Player*> players;
     
@@ -84,9 +75,6 @@ int main()
         Player player2(sf::Color::Blue, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
         players.push_back(&player2);
     }
-
-    // Declare a mutex to protect the gameBoard
-    std::mutex gameBoardMutex;
 
     // Init
     InputHandler inputHandler;
@@ -104,6 +92,7 @@ int main()
 
     while (gameWindow.isOpen()) {
         while (gameWindow.pollEvent(event)) {
+            std::lock_guard<std::recursive_mutex> lock1(gameboardMutex);
             inputHandler.processInput(players, &gameBoard, event);
             if (event.type == sf::Event::Closed) {
                 gameWindow.close();
@@ -111,7 +100,7 @@ int main()
         }
         /* Main loop */
         gameWindow.clear();
-        // std::lock_guard<std::mutex> lock(gameBoardMutex);
+        std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
         gameWindow.drawGameboard(&gameBoard, &gameBlockReference);
         gameWindow.drawScoreboard(69, 69);
         gameWindow.display();
