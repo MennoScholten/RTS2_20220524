@@ -1,4 +1,4 @@
-#include "Window.h"
+#include "include/Window.h"
 
 // Constructor
 Window::Window(int width, int height, const std::string& windowName) {
@@ -40,7 +40,7 @@ void Window::drawScoreboard(int score, int time)
 {
     sf::Text text;
     sf::Font font;
-    font.loadFromFile("fonts/PixelOperator.ttf");
+    font.loadFromFile("../assets/fonts/PixelOperator.ttf");
 
     text.setFont(font);
     text.setString("Scoreboard placeholder");
