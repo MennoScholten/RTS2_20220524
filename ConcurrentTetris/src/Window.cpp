@@ -14,22 +14,22 @@ Window::Window(int width, int height, const std::string& windowName) {
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
 }
 
-void Window::drawGameboard(Gameboard* gameboard, Block* Tetromino_size_reference)
+void Window::drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight)
 {
-    for (int row = 0; row < gameboard->getRows(); row++) {
-        for (int column = 0; column < gameboard->getColumns(); column++) {
-            if (gameboard->isOccupied(row, column)) {
-                sf::RectangleShape block(sf::Vector2f(Tetromino_size_reference->getHeight(), Tetromino_size_reference->getWidth()));
-                block.setFillColor(gameboard->getGameboard()[row][column]->getColor());
-                block.setPosition(column * Tetromino_size_reference->getWidth(), row * Tetromino_size_reference->getHeight() + SCOREBOARD_HEIGHT);
+    for (int X = 0; X < gameboard->getSizeX(); X++) {
+        for (int Y = 0; Y < gameboard->getSizeY(); Y++) {
+            if (gameboard->isOccupied(X, Y)) {
+                sf::RectangleShape block(sf::Vector2f(blockHeight, blockWidth));
+                block.setFillColor(gameboard->getGameboard()[X][Y]->getColor());
+                block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
             }
             else {
-                sf::RectangleShape block(sf::Vector2f(Tetromino_size_reference->getHeight(), Tetromino_size_reference->getWidth()));
+                sf::RectangleShape block(sf::Vector2f(blockHeight, blockWidth));
                 block.setOutlineColor(GRID_COLOR);
                 block.setFillColor(sf::Color::Transparent);
                 block.setOutlineThickness(GRID_THICKNESS);
-                block.setPosition(column * Tetromino_size_reference->getWidth(), row * Tetromino_size_reference->getHeight() + SCOREBOARD_HEIGHT);
+                block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
             }
         }

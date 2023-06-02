@@ -3,27 +3,27 @@
 
 // Constructor
 Gameboard::Gameboard(int x, int y) {
-    board.resize(y, std::vector<Block*>(x));
-    Gameboard::x = x;
-    Gameboard::y = y;
+    board.resize(x, std::vector<Block*>(y));
+    this->x = x;
+    this->y = y;
 }
 
-std::vector<std::vector<Block*>> Gameboard::getGameboard() {
-    return Gameboard::board;
+const std::vector<std::vector<Block*>>& Gameboard::getGameboard() const {
+    return this->board;
 }
 
-int Gameboard::getColumns() const
+int Gameboard::getSizeX() const
 {
-    return Gameboard::x;
+    return this->x;
 }
 
-int Gameboard::getRows() const
+int Gameboard::getSizeY() const
 {
-    return Gameboard::y;
+    return this->y;
 }
 
 void Gameboard::addBlock(int x, int y, Block* blockObject) {
-    Gameboard::board[y][x] = blockObject;
+    this->board[x][y] = blockObject;
     blockObject->setPosition(x, y);
 }
 
@@ -37,7 +37,7 @@ bool Gameboard::isOccupied(int x, int y)
 /* Used for drawing purposes */
 
 {
-    if (x < 0 || x >= Gameboard::board.size() || y < 0 || y >= Gameboard::board[0].size())
+    if (x < 0 || x >= this->board.size() || y < 0 || y >= this->board[0].size())
     {
         // Invalid indices, consider it as occupied
         return true;
@@ -47,41 +47,40 @@ bool Gameboard::isOccupied(int x, int y)
 
 bool Gameboard::checkCollision(int x, int y)
 {
-    if (x < 0 || x >= Gameboard::board.size() || y < 0 || y >= Gameboard::board[0].size())
+    if (x < 0 || x >= this->board.size() || y < 0 || y >= this->board[0].size())
     {
         // Invalid indices, consider it as occupied
         return true;
     }
     // The cell is a null pointer means its empty
-    if (this->board[y][x] == nullptr) {
+    if (this->board[x][y] == nullptr) {
         return false;
     }
     // If not nullpointer, check if it is a player-controlled block
-    return this->board[y][x]->getAlive() == false;
+    return this->board[x][y]->getAlive() == false;
 }
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {
-    if (this->board[block->getPositionY()][block->getPositionX()] == block) {
-        this->board[block->getPositionY()][block->getPositionX()] = nullptr;
-        this->board[newY][newX] = block;
+    if (this->board[block->getPositionX()][block->getPositionY()] == block) {
+        this->board[block->getPositionX()][block->getPositionY()] = nullptr;
+        this->board[newX][newY] = block;
         block->setPosition(newX, newY);
     }
     else {
-        this->board[newY][newX] = block;
+        this->board[newX][newY] = block;
         block->setPosition(newX, newY);
     }
 }
 
 int Gameboard::checkFilledRows() {
-    int filledRows = 0;
     for (int row = this->board.size() - 1; row >= 0; row--) {
         // Check if any elements in row are nullptr
         if (std::none_of(this->board[row].begin(), this->board[row].end(), [](Block* block) { return block == nullptr; })) {
             // Check if any elements in row are still player controlled
             if (std::all_of(this->board[row].begin(), this->board[row].end(), [](Block* block) { return block->getAlive() == false; })) {
-                std::cout << "FULL LINE! ";
+                this->clearedRows++;
                 for (Block* block : this->board[row]) {
-                    this->board[block->getPositionY()][block->getPositionX()] = nullptr;
+                    this->board[block->getPositionX()][block->getPositionY()] = nullptr;
                     delete block;
                 }
                 this->moveAllBlocksDown(row);
@@ -89,15 +88,19 @@ int Gameboard::checkFilledRows() {
             }
         }
     }
-    return 0;
+    return this->clearedRows;
 }
 
 void Gameboard::moveAllBlocksDown(int row) {
     for (int i = row - 1; i >= 0; i--) {
         for (Block* block : this->board[i]) {
             if (block != nullptr) {
-                this->moveBlock(block, block->getPositionX(), block->getPositionY() + 1);
+                this->moveBlock(block, block->getPositionX() + 1, block->getPositionY());
             }
         }
     }
+}
+
+void Gameboard::resetRowsScoreCounter() {
+    this->clearedRows = 0;
 }

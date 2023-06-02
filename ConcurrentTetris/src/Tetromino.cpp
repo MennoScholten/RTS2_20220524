@@ -167,10 +167,6 @@ sf::Vector2i Tetromino::getGridPosition() {
 }
 
 void Tetromino::rotateClockwise(Gameboard* board) {
-    /* Something cross between SRS and TGM rotation system 
-    https://tetris.wiki/Arika_Rotation_System
-    https://tetris.fandom.com/wiki/TGM_Rotation */
-
     // Store the current blocks' positions for potential rollback when checking for collisions
     std::vector<std::pair<int, int>> oldPositions;
     for (auto block : blocks) {
@@ -184,8 +180,8 @@ void Tetromino::rotateClockwise(Gameboard* board) {
     for (auto block : blocks) {
         int relativeX = block->getPositionX() - this->pivotPoint.x;
         int relativeY = block->getPositionY() - this->pivotPoint.y;
-        int newPositionX = this->pivotPoint.x - relativeY;
-        int newPositionY = this->pivotPoint.y + relativeX;
+        int newPositionX = this->pivotPoint.x + relativeY;
+        int newPositionY = this->pivotPoint.y - relativeX;
 
         // Check for collisions
         if (board->checkCollision(newPositionX, newPositionY)) {
@@ -202,24 +198,24 @@ void Tetromino::rotateClockwise(Gameboard* board) {
 }
 
 void Tetromino::moveRight(Gameboard* board) {
-    if (this->checkIfMoveIsValid(board, 1, 0)) {
+    if (this->checkIfMoveIsValid(board, 0, 1)) {
         for (auto block : blocks) {
-            int newX = block->getPositionX() + 1;
-            int newY = block->getPositionY();
+            int newX = block->getPositionX();
+            int newY = block->getPositionY() + 1;
             board->moveBlock(block, newX, newY);
         }
-        this->setGridPosition(this->gridPosition.x + 1, this->gridPosition.y + 0);
+        this->setGridPosition(this->gridPosition.x, this->gridPosition.y + 1);
     }
 }
 
 void Tetromino::moveLeft(Gameboard* board) {
-    if (this->checkIfMoveIsValid(board, -1, 0)) {
+    if (this->checkIfMoveIsValid(board, 0, -1)) {
         for (auto block : blocks) {
-            int newX = block->getPositionX() - 1;
-            int newY = block->getPositionY();
+            int newX = block->getPositionX();
+            int newY = block->getPositionY() - 1;
             board->moveBlock(block, newX, newY);
         }
-        this->setGridPosition(this->gridPosition.x - 1, this->gridPosition.y + 0);
+        this->setGridPosition(this->gridPosition.x, this->gridPosition.y - 1);
     }
 }
 
@@ -227,13 +223,13 @@ bool Tetromino::moveDown(Gameboard* board) {
     /**
     * Returns true if move was legal, false if block can not move down any more.
     */
-    if (this->checkIfMoveIsValid(board, 0, 1)) {
+    if (this->checkIfMoveIsValid(board, 1, 0)) {
         for (auto block : blocks) {
-            int newX = block->getPositionX();
-            int newY = block->getPositionY() + 1;
+            int newX = block->getPositionX() + 1;
+            int newY = block->getPositionY();
             board->moveBlock(block, newX, newY);
         }
-        this->setGridPosition(this->gridPosition.x + 0, this->gridPosition.y + 1);
+        this->setGridPosition(this->gridPosition.x + 1, this->gridPosition.y);
         return true;
     }
     return false;
@@ -241,23 +237,21 @@ bool Tetromino::moveDown(Gameboard* board) {
 
 void Tetromino::moveDrop(Gameboard* board) {
     // Validate that move is valid
-    while (this->checkIfMoveIsValid(board, 0, 1)) {
+    while (this->checkIfMoveIsValid(board, 1, 0)) {
         for (auto block : blocks) {
-            int newX = block->getPositionX();
-            int newY = block->getPositionY() + 1;
+            int newX = block->getPositionX() + 1;
+            int newY = block->getPositionY();
             board->moveBlock(block, newX, newY);
         }
-        this->setGridPosition(this->gridPosition.x + 0, this->gridPosition.y + 1);
+        this->setGridPosition(this->gridPosition.x + 1, this->gridPosition.y);
     }
 }
 
 bool Tetromino::checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY) {
     std::vector<bool> isValid;
     for (auto block : this->blocks) {
-        int relativeX = block->getPositionX();
-        int relativeY = block->getPositionY();
-        int newX = relativeX + tetrominoNewX;
-        int newY = relativeY + tetrominoNewY;
+        int newX = block->getPositionX() + tetrominoNewX;
+        int newY = block->getPositionY() + tetrominoNewY;
         // Check for collisions
         isValid.push_back(board->checkCollision(newX, newY));
     }

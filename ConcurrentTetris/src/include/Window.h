@@ -11,7 +11,7 @@ public:
     Window(int width, int height, const std::string& windowName);
 
     // Drawing functions
-    void drawGameboard(Gameboard* gameboard, Block* block_size_reference);
+    void drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight);
     void drawScoreboard(int score, int time);
 
     // Get - Set

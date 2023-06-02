@@ -2,11 +2,16 @@ cmake_minimum_required(VERSION 3.12)
 project(ConcurrentTetris)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+enable_testing()
+
+# SFML library
 set(SFML_STATIC_LIBRARIES TRUE)
-
 set(SFML_DIR "C:/SFML-2.5.1-VS/lib/cmake/SFML")
-
 find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
+
+# Add tests
+add_subdirectory(tests)
 
 # Add your source files
 set(SOURCES

@@ -30,7 +30,7 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 Tetromino* tetromino = new Tetromino();
                 sf::Color color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
                 std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
-                tetromino->createRandomTetromino(board->getColumns()/2, 0, color);
+                tetromino->createRandomTetromino(0, board->getSizeY() / 2, color);
                 std::lock_guard<std::recursive_mutex> lock2(gameboardMutex);
                 bool gameOver = tetromino->addToGameBoard(board);
                 if (!gameOver) {
@@ -50,12 +50,13 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 std::lock_guard<std::recursive_mutex> lock3(gameboardMutex);
                 bool wasBlockMoved = activeTetrimino->moveDown(board);
                 std::cout << "Move Down: " << wasBlockMoved << "\n";
+                // bool wasBlockMoved = true;
                 if (wasBlockMoved == false) {
                     player->setActiveTetrimino(nullptr);
                     std::lock_guard<std::recursive_mutex> lock4(gameboardMutex);
                     activeTetrimino->freezeToBoard(board);
                     delete activeTetrimino;
-                    
+
                 }
             }
             std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
@@ -68,11 +69,14 @@ int main()
 {
     /* Should be obtained from main menu */
     // TODO: Non-square dimensions are broken
-	int gameboardWidth = 18;
-	int gameboardHeight = 18;
+    const int GAMEBOARD_HEIGHT = 16;
+    const int GAMEBOARD_WIDTH = 12;
+    Block block(0, 0, sf::Color::Blue);
+    const int BLOCK_WIDTH = block.getWidth();
+    const int BLOCK_HEIGHT = block.getHeight();
     int playerCount = 1;
+
     std::vector<Player*> players;
-    
     Player player1(sf::Color::Blue, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
     players.push_back(&player1);
     // Max 2 players for now
@@ -83,22 +87,21 @@ int main()
 
     // Init
     InputHandler inputHandler;
-	Gameboard gameBoard(gameboardWidth, gameboardHeight);
-    Block gameBlockReference(0, 0, sf::Color::Blue);  // This is only used to determine gameWindow size. Kind of weird.
+    Gameboard board(GAMEBOARD_HEIGHT, GAMEBOARD_WIDTH);
 
-	Window gameWindow(
-        gameboardWidth * gameBlockReference.getWidth(), 
-        gameboardHeight * gameBlockReference.getHeight(), "Concurrent Tetris");
+    Window gameWindow(
+        GAMEBOARD_WIDTH * BLOCK_WIDTH,
+        GAMEBOARD_HEIGHT * BLOCK_HEIGHT, "Concurrent Tetris");
 
-	sf::Event event;
+    sf::Event event;
 
     // Start the logic thread
-    std::thread gameThread(gameLogicThread, players, &gameBoard, &inputHandler);
+    std::thread gameThread(gameLogicThread, players, &board, &inputHandler);
 
     while (gameWindow.isOpen()) {
         while (gameWindow.pollEvent(event)) {
             std::lock_guard<std::recursive_mutex> lock1(gameboardMutex);
-            inputHandler.processInput(players, &gameBoard, event);
+            inputHandler.processInput(players, &board, event);
             if (event.type == sf::Event::Closed) {
                 gameWindow.close();
             }
@@ -106,7 +109,7 @@ int main()
         /* Main loop */
         gameWindow.clear();
         std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
-        gameWindow.drawGameboard(&gameBoard, &gameBlockReference);
+        gameWindow.drawGameboard(&board, BLOCK_WIDTH, BLOCK_HEIGHT);
         gameWindow.drawScoreboard(69, 69);
         gameWindow.display();
     }
