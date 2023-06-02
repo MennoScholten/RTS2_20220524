@@ -18,7 +18,7 @@ add_subdirectory(tests)
 
 # Add your source files
 set(SOURCES
-    src/main.cpp
+    src/Main.cpp
     src/Block.cpp
     src/Gameboard.cpp
     src/InputHandler.cpp
