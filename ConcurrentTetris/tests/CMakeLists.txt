@@ -33,7 +33,7 @@ ${SOURCES})
 file(COPY ../assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # Link
-target_link_libraries(AllTests PRIVATE GTest::GTest sfml-system sfml-audio sfml-main sfml-window sfml-graphics gdi32 opengl32)
+target_link_libraries(AllTests PRIVATE GTest::GTest sfml-system sfml-audio sfml-window sfml-graphics)
 
 # Add a test for running all the tests
 add_test(NAME RunTests COMMAND AllTests)
