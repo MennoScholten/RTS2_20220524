@@ -1,28 +1,23 @@
-name: CMake tests
+# Run unit tests using CTest
+name: CTests
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-test:
+  checkout-and-check-formatting:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up CMake
-        uses: actions/setup-cmake@v1
-        with:
-          cmake-version: '3.12'
-
-      - name: Build
-        run: cmake --build . --config Debug
-
-      - name: Run tests
-        run: ctest
+    - uses: actions/checkout@v2
+    - name: Run unit tests
+      uses: HorstBaerbel/action-ctest@1.1
+      # These are optional (defaults displayed)
+      with:
+        sourcedir: '.'
+        builddir: 'build'
+        cmakeoptions: '--config Debug'
+        ctestoptions: ''
