@@ -34,4 +34,4 @@ add_executable(ConcurrentTetromino ${SOURCES})
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # Link SFML libraries
-target_link_libraries(ConcurrentTetromino PUBLIC sfml-system sfml-audio sfml-window sfml-graphics)
+target_link_libraries(ConcurrentTetromino PRIVATE sfml-system sfml-audio sfml-window sfml-graphics)
