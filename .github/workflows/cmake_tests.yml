@@ -18,7 +18,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y; sudo apt-get install libsfml-dev -y
 
     - name: CMake build
-      run: cd ConcurrentTetris; mkdir build && cd build; cmake --build .. --config Debug
+      run: cd ConcurrentTetris; cmake -S . -B build; cmake --build ./build --config Debug
 
     - name: Cmake test
       run: ctest .
