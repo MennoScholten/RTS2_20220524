@@ -6,8 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 enable_testing()
 
 # SFML library
-set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR "C:/SFML-2.5.1-VS/lib/cmake/SFML")
+if(UNIX)
+elseif(WIN32)
+    set(SFML_STATIC_LIBRARIES TRUE)
+    set(SFML_DIR "C:/SFML-2.5.1/lib/cmake/SFML")
+endif()
 find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 
 # Add tests
