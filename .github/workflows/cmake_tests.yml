@@ -9,11 +9,13 @@ on:
       
 jobs:
   CMakeTests:
-    runs-on: tonipes/sfml-docker
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: install SFML
+      run: sudo apt-get update && apt-get install -y; sudo apt-get install libsfml-dev -y
 
     - name: CMake build
       run: cd ConcurrentTetris; mkdir build && cd build; cmake --build .. --config Debug
