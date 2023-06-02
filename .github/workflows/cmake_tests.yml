@@ -21,7 +21,7 @@ jobs:
       run: cd ConcurrentTetris; cmake -S . -B build; cmake --build ./build --config Debug
 
     - name: Cmake test
-      run: cd build; ctest --verbose
+      run: cd ConcurrentTetris/build; ctest --verbose
       
     
     
