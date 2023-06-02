@@ -1,25 +1,27 @@
 # Run unit tests using CTest
 name: CTests
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
       
 jobs:
   CMakeTests:
-    runs-on: tonipes/sfml-docker
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: install SFML
+      run: sudo apt-get update && sudo apt-get install -y; sudo apt-get install libsfml-dev -y
 
     - name: CMake build
-      run: cd ConcurrentTetris; mkdir build && cd build; cmake --build .. --config Debug
+      run: cd ConcurrentTetris; cmake -S . -B build; cmake --build ./build --config Debug
 
     - name: Cmake test
-      run: ctest .
+      run: cd ConcurrentTetris/build; ctest --verbose
       
     
     

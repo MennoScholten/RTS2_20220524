@@ -18,7 +18,7 @@ add_subdirectory(tests)
 
 # Add your source files
 set(SOURCES
-    src/main.cpp
+    src/Main.cpp
     src/Block.cpp
     src/Gameboard.cpp
     src/InputHandler.cpp
@@ -34,4 +34,4 @@ add_executable(ConcurrentTetromino ${SOURCES})
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # Link SFML libraries
-target_link_libraries(ConcurrentTetromino PUBLIC sfml-system sfml-audio sfml-main sfml-window sfml-graphics gdi32 opengl32)
+target_link_libraries(ConcurrentTetromino PRIVATE sfml-system sfml-audio sfml-window sfml-graphics)
