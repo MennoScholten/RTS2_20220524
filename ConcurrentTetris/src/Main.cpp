@@ -20,7 +20,6 @@ bool terminateThreads = false;
 void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler)
 {
     const int GAME_TICK_DURATION = 500; // ms
-    const int TETROMINO_UPDATE_FREQUENCY = 10; // ms
 
     while (true) {
         if (terminateThreads == true) {
@@ -44,17 +43,7 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
         }
 
         // Game tick delay
-        for (int i = 0; i < GAME_TICK_DURATION; i += TETROMINO_UPDATE_FREQUENCY) {
-            // Update the active tetrimino's position
-            for (Player* player : players) {
-                Tetromino* activeTetrimino = player->getActiveTetrimino();
-                if (activeTetrimino != nullptr) {
-                    std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
-                    activeTetrimino->updatePosition(board);
-                }
-            }
-            std::this_thread::sleep_for(std::chrono::milliseconds(TETROMINO_UPDATE_FREQUENCY));
-        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(GAME_TICK_DURATION));
 
         // Move the active tetrimino down
         for (Player* player : players) {
@@ -75,6 +64,14 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
             std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
             board->checkFilledRows();
         }
+    }
+}
+
+void updateTetrominoPosition(Player* player, Gameboard* board) {
+    Tetromino* activeTetrimino = player->getActiveTetrimino();
+    if (activeTetrimino != nullptr) {
+        std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
+        activeTetrimino->updatePosition(board);
     }
 }
 
@@ -121,6 +118,11 @@ int main()
                 terminateThreads = true;
             }
         }
+        // Update Tetromino positions before drawing
+        for (Player* player : players) {
+            updateTetrominoPosition(player, &board);
+        }
+        
         /* Main loop */
         gameWindow.clear();
         std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
