@@ -12,6 +12,7 @@ Window::Window(int width, int height, const std::string& windowName) {
 
     // Create the window
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
+    window.setFramerateLimit(120);
 }
 
 void Window::drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight)

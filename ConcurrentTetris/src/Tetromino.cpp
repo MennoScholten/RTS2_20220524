@@ -258,6 +258,21 @@ bool Tetromino::checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetr
     return !std::any_of(isValid.begin(), isValid.end(), [](bool status) { return status; });
 }
 
+void Tetromino::updatePosition(Gameboard* board) {
+    /**
+    * Other player can overwrite the blocks
+    * They would reappear next tick, this will update them back immediately.
+    */
+    if (this->checkIfMoveIsValid(board, 0, 0)) {
+        for (auto block : blocks) {
+            int newX = block->getPositionX();
+            int newY = block->getPositionY();
+            board->moveBlock(block, newX, newY);
+        }
+        this->setGridPosition(this->gridPosition.x, this->gridPosition.y);
+    }
+}
+
 void Tetromino::freezeToBoard(Gameboard* board) {
     /**
     * Converts block to a static block inherited by gameboard

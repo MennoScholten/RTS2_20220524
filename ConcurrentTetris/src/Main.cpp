@@ -19,7 +19,8 @@ bool terminateThreads = false;
 
 void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler)
 {
-    const int GAME_TICK_DURATION = 500;
+    const int GAME_TICK_DURATION = 500; // ms
+    const int TETROMINO_UPDATE_FREQUENCY = 10; // ms
 
     while (true) {
         if (terminateThreads == true) {
@@ -31,7 +32,7 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 Tetromino* tetromino = new Tetromino();
                 sf::Color color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
                 std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
-                tetromino->createRandomTetromino(0, board->getSizeY() / 2, color);
+                tetromino->createRandomTetromino(0, board->getSizeY() / 2, player->getColor());
                 std::lock_guard<std::recursive_mutex> lock2(gameboardMutex);
                 bool gameOver = tetromino->addToGameBoard(board);
                 if (!gameOver) {
@@ -41,8 +42,19 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 player->setActiveTetrimino(tetromino);
             }
         }
-        // Game tick move down
-        std::this_thread::sleep_for(std::chrono::milliseconds(GAME_TICK_DURATION));
+
+        // Game tick delay
+        for (int i = 0; i < GAME_TICK_DURATION; i += TETROMINO_UPDATE_FREQUENCY) {
+            // Update the active tetrimino's position
+            for (Player* player : players) {
+                Tetromino* activeTetrimino = player->getActiveTetrimino();
+                if (activeTetrimino != nullptr) {
+                    std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
+                    activeTetrimino->updatePosition(board);
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(TETROMINO_UPDATE_FREQUENCY));
+        }
 
         // Move the active tetrimino down
         for (Player* player : players) {
@@ -82,10 +94,10 @@ int main()
     const int BLOCK_HEIGHT = block.getHeight();
 
     std::vector<Player*> players;
-    Player player1(sf::Color::Blue, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+    Player player1(userSelection.player1Color, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
     players.push_back(&player1);
     if (playerCount > 1) {
-        Player player2(sf::Color::Red, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+        Player player2(userSelection.player2Color, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
         players.push_back(&player2);
     }
 
@@ -106,6 +118,7 @@ int main()
             inputHandler.processInput(players, &board, event);
             if (event.type == sf::Event::Closed) {
                 gameWindow.close();
+                terminateThreads = true;
             }
         }
         /* Main loop */

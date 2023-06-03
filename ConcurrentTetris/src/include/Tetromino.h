@@ -21,6 +21,7 @@ public:
     void setGridPosition(int x, int y);
     sf::Vector2i getGridPosition();
     bool checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY);
+    void updatePosition(Gameboard* board);
 
     void createRandomTetromino(int x, int y, sf::Color color);
     void blockI(int x, int y, sf::Color color);

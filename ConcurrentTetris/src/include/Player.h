@@ -11,6 +11,7 @@ public:
     sf::Keyboard::Key getMoveRightKey();
     sf::Keyboard::Key getRotateKey();
     sf::Keyboard::Key getDropKey();
+    sf::Color getColor();
     void setActiveTetrimino(Tetromino* tetromino);
     Tetromino* getActiveTetrimino();
 

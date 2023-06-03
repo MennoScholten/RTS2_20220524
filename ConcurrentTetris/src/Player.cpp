@@ -39,6 +39,11 @@ sf::Keyboard::Key Player::getDropKey() {
     return Player::dropKey;
 }
 
+sf::Color Player::getColor()
+{
+    return this->playerColor;
+}
+
 void Player::setActiveTetrimino(Tetromino* tetromino)
 {
     this->activeTetromino = tetromino;
