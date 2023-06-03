@@ -2,14 +2,15 @@
 
 
 Player::Player(const sf::Color& color, sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key rotateKey, sf::Keyboard::Key dropKey)
+    : activeTetromino(nullptr),
+    playerColor(color),
+    moveLeftKey(leftKey),
+    moveRightKey(rightKey),
+    rotateKey(rotateKey),
+    dropKey(dropKey)
 {
-    this->activeTetromino = nullptr;
-    Player::playerColor = color;
-    Player::moveLeftKey = leftKey;
-    Player::moveRightKey = rightKey;
-    Player::rotateKey = rotateKey;
-    Player::dropKey = dropKey;
 }
+
 
 int Player::getScore() {
     return Player::score;

@@ -1,15 +1,13 @@
 #include "include/Window.h"
 
 // Constructor
-Window::Window(int width, int height, const std::string& windowName) {
-    GRID_COLOR = sf::Color(50, 50, 50, 255);
-    GRID_THICKNESS = .50;
-
-    /* Scoreboard placeholder */
-    SCOREBOARD_HEIGHT = 100;
-    SCOREBOARD_SPACER = 1;
-    SCOREBOARD_COLOR = sf::Color(10, 10, 20, 255);
-
+Window::Window(int width, int height, const std::string& windowName)
+    : GRID_COLOR(sf::Color(50, 50, 50, 255)), 
+    GRID_THICKNESS(.50),
+    SCOREBOARD_HEIGHT(100),
+    SCOREBOARD_SPACER(1),
+    SCOREBOARD_COLOR(sf::Color(10, 10, 20, 255))
+{
     // Create the window
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
     window.setFramerateLimit(120);
@@ -57,8 +55,4 @@ void Window::drawScoreboard(int score, int time)
     block.setPosition(0, 0);
     window.draw(block);
     window.draw(text);
-}
-
-int Window::getScoreboardSize() {
-    return Window::SCOREBOARD_HEIGHT;
 }

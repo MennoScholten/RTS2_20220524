@@ -69,11 +69,12 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                     std::lock_guard<std::recursive_mutex> lock4(gameboardMutex);
                     activeTetrimino->freezeToBoard(board);
                     delete activeTetrimino;
-
                 }
             }
             std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
-            board->checkFilledRows();
+            player->setScore(player->getScore() + board->checkFilledRows());
+            board->resetRowsScoreCounter();
+            std::cout << player->getScore();
         }
     }
 }
@@ -94,11 +95,11 @@ int main()
     const int BLOCK_HEIGHT = block.getHeight();
 
     std::vector<Player*> players;
-    Player player1(userSelection.player1Color, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
-    players.push_back(&player1);
-    if (playerCount > 1) {
-        Player player2(userSelection.player2Color, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
-        players.push_back(&player2);
+    Player* player1 = new Player(userSelection.player1Color, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+    players.push_back(player1);
+    if (playerCount >= 2) {
+        Player* player2 = new Player(userSelection.player2Color, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+        players.push_back(player2);
     }
 
     InputHandler inputHandler;

@@ -5,7 +5,7 @@ InputHandler::InputHandler() {
     
 }
 
-void InputHandler::processInput(std::vector<Player*>& players, Gameboard* gameboard, sf::Event event) {
+void InputHandler::processInput(const std::vector<Player*>& players, Gameboard* gameboard, sf::Event event) {
     static std::set<sf::Keyboard::Key> pressedKeys;
 
     if (event.type == sf::Event::KeyPressed) {

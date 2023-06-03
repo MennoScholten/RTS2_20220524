@@ -62,9 +62,9 @@ bool MainMenu::showMainMenu() {
 	window.setFramerateLimit(60);
 	sf::Event event;
 
-	sf::RectangleShape onePlayerButton = this->createButton(&window, 50, 30, sf::Color::Color(100, 100, 100), 130, 130);
-	sf::RectangleShape twoPlayerButton = this->createButton(&window, 50, 30, sf::Color::Color(100, 100, 100), 220, 130);
-	sf::RectangleShape playButton = this->createButton(&window, 200, 60, sf::Color::Color(100, 100, 100), 100, 300);
+	sf::RectangleShape onePlayerButton = this->createButton(&window, 50, 30, sf::Color(100, 100, 100), 130, 130);
+	sf::RectangleShape twoPlayerButton = this->createButton(&window, 50, 30, sf::Color(100, 100, 100), 220, 130);
+	sf::RectangleShape playButton = this->createButton(&window, 200, 60, sf::Color(100, 100, 100), 100, 300);
 	sf::RectangleShape boardHeightInput = this->createButton(&window, 80, 40, sf::Color::White, 110, 220);
 	sf::RectangleShape boardWidthInput = this->createButton(&window, 80, 40, sf::Color::White, 210, 220);
 
@@ -99,4 +99,5 @@ bool MainMenu::showMainMenu() {
 		this->drawText(&window);
 		window.display();
     }
+	return false;
 }
