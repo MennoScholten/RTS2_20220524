@@ -9,7 +9,7 @@ enable_testing()
 if(UNIX)
 elseif(WIN32)
     set(SFML_STATIC_LIBRARIES TRUE)
-    set(SFML_DIR "C:/SFML-2.5.1/lib/cmake/SFML")
+    set(SFML_DIR "C:/SFML-2.5.1-VS/lib/cmake/SFML")
 endif()
 find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 
@@ -25,13 +25,21 @@ set(SOURCES
     src/Player.cpp
     src/Tetromino.cpp
     src/Window.cpp
-)
+ "src/MainMenu.cpp")
 
 # Add the executable
 add_executable(ConcurrentTetromino ${SOURCES})
 
 # Game assets
-file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+add_custom_target(CopyAssets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets
+    COMMENT "Copying assets directory"
+    VERBATIM
+)
+
+# Game assets
+add_dependencies(ConcurrentTetromino CopyAssets)
 
 # Link SFML libraries
 target_link_libraries(ConcurrentTetromino PRIVATE sfml-system sfml-audio sfml-window sfml-graphics)

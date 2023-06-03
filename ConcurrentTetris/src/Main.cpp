@@ -11,6 +11,7 @@
 #include <chrono>
 #include <queue>
 #include <mutex>
+#include "include/MainMenu.h"
 
 
 std::recursive_mutex gameboardMutex;
@@ -67,28 +68,29 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
 
 int main()
 {
-    /* Should be obtained from main menu */
-    // TODO: Non-square dimensions are broken
-    const int GAMEBOARD_HEIGHT = 16;
-    const int GAMEBOARD_WIDTH = 12;
+    MainMenu menu;
+    bool menuResult = menu.showMainMenu();
+    if (menuResult == false) {
+        return 0;
+    }
+    MainMenu::MainMenuData userSelection = menu.getMainMenuData();
+    const int GAMEBOARD_HEIGHT = userSelection.boardDimensions.y;
+    const int GAMEBOARD_WIDTH = userSelection.boardDimensions.x;
+    int playerCount = userSelection.numberOfPlayers;
     Block block(0, 0, sf::Color::Blue);
     const int BLOCK_WIDTH = block.getWidth();
     const int BLOCK_HEIGHT = block.getHeight();
-    int playerCount = 1;
 
     std::vector<Player*> players;
     Player player1(sf::Color::Blue, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
     players.push_back(&player1);
-    // Max 2 players for now
     if (playerCount > 1) {
-        Player player2(sf::Color::Blue, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+        Player player2(sf::Color::Red, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
         players.push_back(&player2);
     }
 
-    // Init
     InputHandler inputHandler;
     Gameboard board(GAMEBOARD_HEIGHT, GAMEBOARD_WIDTH);
-
     Window gameWindow(
         GAMEBOARD_WIDTH * BLOCK_WIDTH,
         GAMEBOARD_HEIGHT * BLOCK_HEIGHT, "Concurrent Tetris");
