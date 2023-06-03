@@ -13,7 +13,7 @@ private:
 
 public:
     // Constructors
-    Block(int y, int x, sf::Color blockColor);
+    Block(int x, int y, sf::Color blockColor);
 
     // Accessors
     int getWidth() const;

@@ -19,8 +19,7 @@ public:
     void freezeToBoard(Gameboard* board);
     sf::Vector2i getPivotPoint();
     void setGridPosition(int x, int y);
-    sf::Vector2i getGridPosition();
-    bool checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY);
+    bool checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY, bool rotation = false);
     void updatePosition(Gameboard* board);
 
     void createRandomTetromino(int x, int y, sf::Color color);

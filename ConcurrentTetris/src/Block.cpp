@@ -2,11 +2,8 @@
 
 // Constructor
 Block::Block(int x, int y, sf::Color blockColor)
+    : positionX(x), positionY(y), color(blockColor), isAlive(true)
 {
-    positionX = x;
-    positionY = y;
-    color = blockColor;
-    isAlive = true;
 }
 
 int Block::getWidth() const

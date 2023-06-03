@@ -162,39 +162,24 @@ void Tetromino::setGridPosition(int x, int y) {
     this->gridPosition.y = y;
 }
 
-sf::Vector2i Tetromino::getGridPosition() {
-    return this->gridPosition;
-}
-
 void Tetromino::rotateClockwise(Gameboard* board) {
-    // Store the current blocks' positions for potential rollback when checking for collisions
-    std::vector<std::pair<int, int>> oldPositions;
-    for (auto block : blocks) {
-        oldPositions.push_back(std::make_pair(block->getPositionX(), block->getPositionY()));
-    }
+
     this->getPivotPoint(); // Update pivot
+
     // Can't rotate (O block)
     if (this->pivotPointOffset.x == 0 && this->pivotPointOffset.y == 0) {
         return;
     }
-    for (auto block : blocks) {
-        int relativeX = block->getPositionX() - this->pivotPoint.x;
-        int relativeY = block->getPositionY() - this->pivotPoint.y;
-        int newPositionX = this->pivotPoint.x + relativeY;
-        int newPositionY = this->pivotPoint.y - relativeX;
-
-        // Check for collisions
-        if (board->checkCollision(newPositionX, newPositionY)) {
-            // Reset position
-            // TODO: Wallkick
-            for (int i = 0; i < blocks.size(); i++) {
-                board->moveBlock(blocks[i], oldPositions[i].first, oldPositions[i].second);
-                blocks[i]->setPosition(oldPositions[i].first, oldPositions[i].second);
-            }
-            return;
+    if (this->checkIfMoveIsValid(board, 0, 0, true)) {
+        for (auto block : blocks) {
+            int relativeX = block->getPositionX() - this->pivotPoint.x;
+            int relativeY = block->getPositionY() - this->pivotPoint.y;
+            int newX = this->pivotPoint.x + relativeY;
+            int newY = this->pivotPoint.y - relativeX;
+            board->moveBlock(block, newX, newY);
         }
-        board->moveBlock(block, newPositionX, newPositionY);
     }
+    // Else wallkick and try again?
 }
 
 void Tetromino::moveRight(Gameboard* board) {
@@ -247,11 +232,20 @@ void Tetromino::moveDrop(Gameboard* board) {
     }
 }
 
-bool Tetromino::checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY) {
+bool Tetromino::checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY, bool rotation) {
     std::vector<bool> isValid;
+    int newX, newY;
     for (auto block : this->blocks) {
-        int newX = block->getPositionX() + tetrominoNewX;
-        int newY = block->getPositionY() + tetrominoNewY;
+        if (rotation) {
+            int relativeX = block->getPositionX() - this->pivotPoint.x;
+            int relativeY = block->getPositionY() - this->pivotPoint.y;
+            newX = this->pivotPoint.x + relativeY;
+            newY = this->pivotPoint.y - relativeX;
+        }
+        else {
+            newX = block->getPositionX() + tetrominoNewX;
+            newY = block->getPositionY() + tetrominoNewY;
+        }
         // Check for collisions
         isValid.push_back(board->checkCollision(newX, newY));
     }
