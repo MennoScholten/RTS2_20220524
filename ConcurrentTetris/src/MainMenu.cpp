@@ -99,4 +99,5 @@ bool MainMenu::showMainMenu() {
 		this->drawText(&window);
 		window.display();
     }
+	return false;
 }
