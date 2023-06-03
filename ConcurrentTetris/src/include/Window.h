@@ -14,9 +14,6 @@ public:
     void drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight);
     void drawScoreboard(int score, int time);
 
-    // Get - Set
-    int getScoreboardSize();
-
     // Builtin passthrough
     bool isOpen() { return window.isOpen(); }
     bool pollEvent(sf::Event& event) { return window.pollEvent(event); }

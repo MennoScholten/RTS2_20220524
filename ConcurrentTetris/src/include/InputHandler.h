@@ -9,7 +9,7 @@
 class InputHandler {
 public:
     InputHandler();
-    void processInput(std::vector<Player*>& players, Gameboard* gameboard, sf::Event event);
+    void processInput(const std::vector<Player*>& players, Gameboard* gameboard, sf::Event event);
 
 private:
 };
