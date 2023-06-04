@@ -9,6 +9,7 @@
 #include "include/Tetromino.h"
 #include <thread>
 #include <chrono>
+#include <time.h>
 #include <queue>
 #include "include/MainMenu.h"
 
@@ -54,8 +55,11 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                     delete activeTetrimino;
                 }
             }
-            player->setScore(player->getScore() + board->checkFilledRows());
-            std::cout << "Score: " << player->getScore() << "\n";
+            int clearedRows = board->checkFilledRows();
+            if (clearedRows >= 1) {
+                player->setScore(player->getScore() + std::pow(6, clearedRows));
+            }
+            std::cout << player->getScore();
         }
     }
 }
@@ -102,8 +106,13 @@ int main()
 
     // Start the logic thread
     std::thread gameThread(gameLogicThread, players, &board, &inputHandler);
-
+    
+    time_t startSeconds;
+    startSeconds = time(NULL);
+ 
     while (gameWindow.isOpen()) {
+        time_t gameSeconds;
+        gameSeconds = time(NULL) - startSeconds;
         while (gameWindow.pollEvent(event)) {
             inputHandler.processInput(players, &board, event);
             if (event.type == sf::Event::Closed) {
@@ -120,9 +129,13 @@ int main()
         gameWindow.clear();
         board.getGameboardCopy(&colorVector);
         gameWindow.drawGameboard(colorVector, BLOCK_WIDTH, BLOCK_HEIGHT);
-        gameWindow.drawScoreboard(69, 69);
+        if (players.size() > 1) {
+            gameWindow.drawScoreboard(players[0]->getScore(), players[1]->getScore(), int(gameSeconds));
+        }
+        else {
+            gameWindow.drawScoreboard(players[0]->getScore(), 0, int(gameSeconds));
+        }
         gameWindow.display();
-
     }
     terminateThreads = true;
     return 0;
