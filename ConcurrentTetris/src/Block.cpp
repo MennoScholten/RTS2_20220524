@@ -8,12 +8,12 @@ Block::Block(int x, int y, sf::Color blockColor)
 
 int Block::getWidth() const
 {
-    return Block::width;
+    return this->width;
 }
 
 int Block::getHeight() const
 {
-    return Block::height;
+    return this->height;
 }
 
 bool Block::getAlive()
@@ -28,21 +28,21 @@ void Block::setAlive(bool alive)
 
 sf::Color Block::getColor() const
 {
-    return Block::color;
+    return this->color;
 }
 
 int Block::getPositionX()
 {
-    return Block::positionX;
+    return this->positionX;
 }
 
 int Block::getPositionY() 
 {
-    return Block::positionY;
+    return this->positionY;
 }
 
 void Block::setPosition(int x, int y)
 {
-    Block::positionY = y;
-    Block::positionX = x;
+    this->positionY = y;
+    this->positionX = x;
 }
