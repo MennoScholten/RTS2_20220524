@@ -4,8 +4,8 @@
 Window::Window(int width, int height, const std::string& windowName)
     : GRID_COLOR(sf::Color(50, 50, 50, 255)), 
     GRID_THICKNESS(.50),
-    SCOREBOARD_HEIGHT(100),
-    SCOREBOARD_SPACER(1),
+    SCOREBOARD_HEIGHT(150),
+    SCOREBOARD_SPACER(10),
     SCOREBOARD_COLOR(sf::Color(10, 10, 20, 255))
 {
     // Create the window
@@ -35,24 +35,56 @@ void Window::drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight
     }
 }
 
-void Window::drawScoreboard(int score, int time)
+void Window::drawScoreboard(int score1, int score2, int time)
 {
-    sf::Text text;
+    sf::Text mainText;
+    sf::Text scoreTextP1;
+    sf::Text scoreTextP2;
+    sf::Text timeText;
     sf::Font font;
     font.loadFromFile("assets/fonts/PixelOperator.ttf");
+    mainText.setFont(font);
+    mainText.setString("Scoreboard");
+    mainText.setCharacterSize(32); // in pixels, not points!
+    mainText.setFillColor(GRID_COLOR);
+    mainText.setStyle(sf::Text::Italic | sf::Text::Underlined);
+    mainText.setPosition(
+        window.getSize().x / 2 - mainText.getGlobalBounds().width / 2,
+        (SCOREBOARD_SPACER) - mainText.getGlobalBounds().height);
 
-    text.setFont(font);
-    text.setString("Scoreboard placeholder");
-    text.setCharacterSize(32); // in pixels, not points!
-    text.setFillColor(GRID_COLOR);
-    text.setStyle(sf::Text::Italic | sf::Text::Underlined);
-    text.setPosition(
-        window.getSize().x / 2 - text.getGlobalBounds().width / 2,
-        (SCOREBOARD_HEIGHT - SCOREBOARD_SPACER) / 2 - text.getGlobalBounds().height);
+    scoreTextP1.setFont(font);
+    scoreTextP1.setString("Player1: " + std::to_string(score1));
+    scoreTextP1.setCharacterSize(32); // in pixels, not points!
+    scoreTextP1.setFillColor(sf::Color::Cyan);
+    scoreTextP1.setStyle(sf::Text::Italic);
+    scoreTextP1.setPosition(
+        window.getSize().x / 2 - scoreTextP1.getGlobalBounds().width / 2,
+        (SCOREBOARD_HEIGHT - SCOREBOARD_SPACER) - 3 * scoreTextP1.getGlobalBounds().height);
+
+    scoreTextP2.setFont(font);
+    scoreTextP2.setString("Player2: " + std::to_string(score2));
+    scoreTextP2.setCharacterSize(32); // in pixels, not points!
+    scoreTextP2.setFillColor(sf::Color::Red);
+    scoreTextP2.setStyle(sf::Text::Italic);
+    scoreTextP2.setPosition(
+        window.getSize().x / 2 - scoreTextP2.getGlobalBounds().width / 2,
+        (SCOREBOARD_HEIGHT - SCOREBOARD_SPACER) - 1.8 * scoreTextP2.getGlobalBounds().height);
+
+    timeText.setFont(font);
+    timeText.setString("Time: " + std::to_string(time));
+    timeText.setCharacterSize(32); // in pixels, not points!
+    timeText.setFillColor(sf::Color::White);
+    timeText.setStyle(sf::Text::Italic);
+    timeText.setPosition(
+        window.getSize().x / 2 - timeText.getGlobalBounds().width / 2,
+        (SCOREBOARD_HEIGHT - SCOREBOARD_SPACER) - 6 * timeText.getGlobalBounds().height);
 
     sf::RectangleShape block(sf::Vector2f(window.getSize().x, SCOREBOARD_HEIGHT - SCOREBOARD_SPACER));
     block.setFillColor(SCOREBOARD_COLOR);
     block.setPosition(0, 0);
     window.draw(block);
-    window.draw(text);
+    window.draw(mainText);
+    window.draw(scoreTextP1);
+    window.draw(scoreTextP2);
+    window.draw(timeText);
 }
