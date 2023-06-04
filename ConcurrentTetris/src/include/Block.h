@@ -1,15 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <atomic>
 
 class Block
 {
 private:
-    int width = 30; // pixels
-    int height = 30; // pixels
-    int positionY = 0; // relative_position
-    int positionX = 0; // relative_position
+    std::atomic<int> width = 30; // pixels
+    std::atomic<int> height = 30; // pixels
+    std::atomic<int> positionY = 0; // relative_position
+    std::atomic<int> positionX = 0; // relative_position
+    std::atomic<bool> isAlive = false; // user controlled
     sf::Color color = sf::Color::Transparent;
-    bool isAlive = false;
 
 public:
     // Constructors
@@ -23,7 +24,6 @@ public:
     sf::Color getColor() const;
 
     // Modifiers
-    void setColor(const sf::Color& blockColor);
     int getPositionX();
     int getPositionY();
     void setPosition(int x, int y);

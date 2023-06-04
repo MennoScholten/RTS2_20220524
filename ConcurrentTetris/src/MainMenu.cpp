@@ -1,7 +1,7 @@
 #include "include/MainMenu.h"
 
 MainMenu::MainMenu() {
-	this->data.boardDimensions.x = 10;
+	this->data.boardDimensions.x = 20;
 	this->data.boardDimensions.y = 20;
 	this->data.numberOfPlayers = 1;
 	this->data.player1Color = sf::Color::Cyan;

@@ -13,13 +13,12 @@ Window::Window(int width, int height, const std::string& windowName)
     window.setFramerateLimit(120);
 }
 
-void Window::drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight)
-{
-    for (int X = 0; X < gameboard->getSizeX(); X++) {
-        for (int Y = 0; Y < gameboard->getSizeY(); Y++) {
-            if (gameboard->isOccupied(X, Y)) {
+void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVector, int blockWidth, int blockHeight) {
+    for (int X = 0; X < gameboardColorVector.size(); X++) {
+        for (int Y = 0; Y < gameboardColorVector[0].size(); Y++) {
+            if (gameboardColorVector[X][Y] != sf::Color::Transparent) {
                 sf::RectangleShape block(sf::Vector2f(blockHeight, blockWidth));
-                block.setFillColor(gameboard->getGameboard()[X][Y]->getColor());
+                block.setFillColor(gameboardColorVector[X][Y]);
                 block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
             }

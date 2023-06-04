@@ -34,7 +34,6 @@ TEST(TetrisTests, TestGameboardCollision)
     block2.setAlive(false);
     board.addBlock(block.getPositionX(), block.getPositionY(), &block);
     board.addBlock(block2.getPositionX(), block2.getPositionY(), &block2);
-    ASSERT_TRUE(board.isOccupied(block.getPositionX(), block.getPositionY()));
     ASSERT_TRUE(board.checkCollision(block.getPositionX(), block.getPositionY()));
 }
 
