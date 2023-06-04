@@ -9,6 +9,7 @@
 #include "include/Tetromino.h"
 #include <thread>
 #include <chrono>
+#include <time.h>
 #include <queue>
 #include <mutex>
 #include "include/MainMenu.h"
@@ -61,7 +62,9 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 }
             }
             std::lock_guard<std::recursive_mutex> lock5(gameboardMutex);
-            player->setScore(player->getScore() + board->checkFilledRows());
+            if (board->checkFilledRows() >= 1) {
+                player->setScore(player->getScore() + std::pow(6, board->checkFilledRows()));
+            }
             board->resetRowsScoreCounter();
             std::cout << player->getScore();
         }
@@ -109,8 +112,13 @@ int main()
 
     // Start the logic thread
     std::thread gameThread(gameLogicThread, players, &board, &inputHandler);
-
+    
+    time_t startSeconds;
+    startSeconds = time(NULL);
+ 
     while (gameWindow.isOpen()) {
+        time_t gameSeconds;
+        gameSeconds = time(NULL) - startSeconds;
         while (gameWindow.pollEvent(event)) {
             std::lock_guard<std::recursive_mutex> lock1(gameboardMutex);
             inputHandler.processInput(players, &board, event);
@@ -128,7 +136,13 @@ int main()
         gameWindow.clear();
         std::lock_guard<std::recursive_mutex> lock(gameboardMutex);
         gameWindow.drawGameboard(&board, BLOCK_WIDTH, BLOCK_HEIGHT);
-        gameWindow.drawScoreboard(69, 69);
+        if (players.size() > 1) {
+            gameWindow.drawScoreboard(players[0]->getScore(), players[1]->getScore(), int(gameSeconds));
+        }
+        else {
+            gameWindow.drawScoreboard(players[0]->getScore(), 0, int(gameSeconds));
+        }
+        
         gameWindow.display();
     }
     terminateThreads = true;

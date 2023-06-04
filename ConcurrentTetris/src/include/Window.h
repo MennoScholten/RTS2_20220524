@@ -12,7 +12,7 @@ public:
 
     // Drawing functions
     void drawGameboard(Gameboard* gameboard, int blockWidth, int blockHeight);
-    void drawScoreboard(int score, int time);
+    void drawScoreboard(int score1, int score2, int time);
 
     // Builtin passthrough
     bool isOpen() { return window.isOpen(); }
