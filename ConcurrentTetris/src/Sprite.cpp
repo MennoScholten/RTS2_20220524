@@ -1,6 +1,6 @@
 #include "include/Sprite.h"
 
-explicit CustomSprite::CustomSprite(const std::string& filename, bool isAnimation, int frameCount, float frameRate, int sheetColumns, int sheetRows) :
+CustomSprite::CustomSprite(const std::string& filename, bool isAnimation, int frameCount, float frameRate, int sheetColumns, int sheetRows) :
     isAnimation(isAnimation)
 {
     if (!texture.loadFromFile(filename)) {
