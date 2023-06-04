@@ -27,11 +27,6 @@ void Gameboard::getGameboardCopy(std::vector<std::vector<sf::Color>>* colorVecto
     }
 }
 
-int Gameboard::getSizeX() const
-{
-    return this->x;
-}
-
 int Gameboard::getSizeY() const
 {
     return this->y;

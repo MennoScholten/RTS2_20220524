@@ -9,8 +9,8 @@ class Gameboard {
 private:
     std::vector<std::vector<Block*>> board;
     std::mutex boardMutex; // Mutex for protecting board access
-    std::atomic<int> x = 0;
-    std::atomic<int> y = 0;
+    std::atomic<int> x{ 0 };
+    std::atomic<int> y{ 0 };
     std::atomic<int> aromicRenderArray;
     void moveAllBlocksDown(int row);
     
