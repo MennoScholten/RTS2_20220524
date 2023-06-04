@@ -25,7 +25,7 @@ set(SOURCES
     src/Player.cpp
     src/Tetromino.cpp
     src/Window.cpp
- "src/MainMenu.cpp")
+ "src/MainMenu.cpp" "src/Sprite.cpp")
 
 # Add the executable
 add_executable(ConcurrentTetromino ${SOURCES})

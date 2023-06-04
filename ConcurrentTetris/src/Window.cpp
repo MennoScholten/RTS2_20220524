@@ -6,6 +6,8 @@ Window::Window(int width, int height, const std::string& windowName)
     GRID_THICKNESS(.50),
     SCOREBOARD_HEIGHT(150),
     SCOREBOARD_SPACER(10),
+    BLOCK_OUTLINE_COLOR(sf::Color(20, 20, 20, 255)),
+    BLOCK_OUTLINE_THICKNESS(2),
     SCOREBOARD_COLOR(sf::Color(10, 10, 20, 255))
 {
     // Create the window
@@ -21,6 +23,13 @@ void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVec
                 block.setFillColor(gameboardColorVector[X][Y]);
                 block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
+                // Add a outline
+                sf::RectangleShape block_outline(sf::Vector2f(blockHeight, blockWidth));
+                block_outline.setOutlineColor(BLOCK_OUTLINE_COLOR);
+                block_outline.setFillColor(sf::Color::Transparent);
+                block_outline.setOutlineThickness(BLOCK_OUTLINE_THICKNESS);
+                block_outline.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
+                window.draw(block_outline);
             }
             else {
                 sf::RectangleShape block(sf::Vector2f(blockHeight, blockWidth));
