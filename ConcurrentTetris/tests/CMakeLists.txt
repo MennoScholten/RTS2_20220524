@@ -21,16 +21,18 @@ set(SOURCES
     ../src/Player.cpp
     ../src/Tetromino.cpp
     ../src/Window.cpp
+    ../src/Sprite.cpp
 )
 
 # Add the executable
 add_executable(AllTests 
 "GameboardTests.cpp" 
 "TetrominoTests.cpp" 
+"SpriteTests.cpp" 
 ${SOURCES})
 
 # Game assets
-file(COPY ../assets DESTINATION ${CMAKE_BINARY_DIR})
+add_dependencies(AllTests CopyAssets)
 
 # Link
 target_link_libraries(AllTests PRIVATE GTest::GTest sfml-system sfml-audio sfml-window sfml-graphics)

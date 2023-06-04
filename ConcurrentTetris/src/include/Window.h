@@ -27,6 +27,8 @@ private:
     sf::RenderWindow window;
     sf::Color GRID_COLOR;
     sf::Color SCOREBOARD_COLOR;
+    sf::Color BLOCK_OUTLINE_COLOR;
+    int BLOCK_OUTLINE_THICKNESS;
     float GRID_THICKNESS;
     int SCOREBOARD_HEIGHT;
     int SCOREBOARD_SPACER;

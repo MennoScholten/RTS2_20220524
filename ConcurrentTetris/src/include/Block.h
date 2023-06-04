@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <atomic>
+#include "Sprite.h"
 
 class Block
 {
