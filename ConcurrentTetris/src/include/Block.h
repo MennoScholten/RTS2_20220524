@@ -9,7 +9,7 @@ private:
     std::atomic<int> height{ 30 }; // pixels
     std::atomic<int> positionY{ 30 }; // relative_position
     std::atomic<int> positionX{ 30 }; // relative_position
-    std::atomic<bool> isAlive{ 30 }; // user controlled
+    std::atomic<bool> isAlive{ true }; // user controlled
     sf::Color color = sf::Color::Transparent;
 
 public:
