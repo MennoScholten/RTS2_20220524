@@ -21,7 +21,6 @@ public:
 
     const std::vector<std::vector<Block*>>& getGameboard() const;
     void getGameboardCopy(std::vector<std::vector<sf::Color>>* colorVector);
-    int getSizeX() const;
     int getSizeY() const;
     bool checkCollision(int x, int y);
     void addBlock(int x, int y, Block* blockObject);
