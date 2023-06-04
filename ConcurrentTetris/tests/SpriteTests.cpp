@@ -11,11 +11,11 @@ TEST(TetrisTests, DISABLED_TestShowingSprite)
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Sprite Test");
     // Create a static image sprite
-    Sprite staticSprite("../assets/sprites/demo_square.png");
+    CustomSprite staticSprite("../assets/sprites/demo_square.png");
     staticSprite.setPosition(100, 100);
     staticSprite.setScale(0.05, 0.05);
     // Create an animated spritesheet
-    Sprite animatedSprite("../assets/sprites/demo_spritesheet.png", true, 60, 15, 10, 6);
+    CustomSprite animatedSprite("../assets/sprites/demo_spritesheet.png", true, 60, 15, 10, 6);
     animatedSprite.setPosition(350, 0);
     animatedSprite.setScale(1, 1);
     window.setFramerateLimit(60);

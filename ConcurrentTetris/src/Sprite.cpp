@@ -1,6 +1,6 @@
 #include "include/Sprite.h"
 
-Sprite::Sprite(const std::string& filename, bool isAnimation, int frameCount, float frameRate, int sheetColumns, int sheetRows) :
+explicit CustomSprite::CustomSprite(const std::string& filename, bool isAnimation, int frameCount, float frameRate, int sheetColumns, int sheetRows) :
     isAnimation(isAnimation)
 {
     if (!texture.loadFromFile(filename)) {
@@ -18,16 +18,16 @@ Sprite::Sprite(const std::string& filename, bool isAnimation, int frameCount, fl
     }
 }
 
-void Sprite::setPosition(float x, float y) {
+void CustomSprite::setPosition(float x, float y) {
     this->sprite.setPosition(x, y);
 }
 
-void Sprite::setScale(float scaleX, float scaleY)
+void CustomSprite::setScale(float scaleX, float scaleY)
 {
     this->sprite.setScale(scaleX, scaleY);
 }
 
-void Sprite::draw(sf::RenderWindow& window)
+void CustomSprite::draw(sf::RenderWindow& window)
 {
     if (this->isAnimation) {
         this->updateAnimation();
@@ -35,7 +35,7 @@ void Sprite::draw(sf::RenderWindow& window)
     window.draw(this->sprite);
 }
 
-void Sprite::updateAnimation() {
+void CustomSprite::updateAnimation() {
     if (this->isAnimation)
     {
         float elapsed = clock.getElapsedTime().asSeconds();

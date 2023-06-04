@@ -1,10 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class Sprite
+class CustomSprite
 {
 public:
-    Sprite(const std::string& filename, bool isAnimation = false, int frameCount = 0, float frameRate = 0, int sheetColumns = 0, int sheetRows = 0);
+    explicit CustomSprite(const std::string& filename, bool isAnimation = false, int frameCount = 0, float frameRate = 0, int sheetColumns = 0, int sheetRows = 0);
     void draw(sf::RenderWindow& window);
     void setPosition(float x, float y);
     void setScale(float scaleX, float scaleY);
