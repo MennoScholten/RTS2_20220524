@@ -11,6 +11,8 @@
 #include <chrono>
 #include <time.h>
 #include <queue>
+#include <stdio.h>
+#include <stdlib.h>
 #include "include/MainMenu.h"
 
 
@@ -20,7 +22,13 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
 {
     const int GAME_TICK_DURATION = 500; // ms
 
-    while (true) {
+    struct timespec job_start,job_end, timer, sleep;
+    timer.tv_sec = 0;
+    timer.tv_nsec = GAME_TICK_DURATION * 1000000;
+
+    timespec_get(&job_start, TIME_UTC);
+    while (true) { 
+        
         if (terminateThreads == true) {
             return;
         }
@@ -40,7 +48,13 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
         }
 
         // Game tick delay
-        std::this_thread::sleep_for(std::chrono::milliseconds(GAME_TICK_DURATION));
+        (void) timespec_get(&job_end, TIME_UTC);
+        //std::cout << "StartTime: " << job_start.tv_nsec << std::endl;
+        //std::cout << "EndTime: " << job_end.tv_nsec << std::endl;
+        sleep.tv_nsec = timer.tv_nsec - (job_end.tv_nsec - job_start.tv_nsec);
+        //std::cout << "sleepTime: " << sleep.tv_nsec << std::endl;
+        std::this_thread::sleep_for(std::chrono::nanoseconds(sleep.tv_nsec));
+        (void) timespec_get(&job_start, TIME_UTC);
 
         // Move the active tetrimino down
         for (Player* player : players) {
