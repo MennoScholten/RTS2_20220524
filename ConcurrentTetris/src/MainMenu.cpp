@@ -10,10 +10,6 @@ MainMenu::MainMenu() {
 	this->fontBold.loadFromFile("assets/fonts/PixelOperator-Bold.ttf");
 	this->windowSize.x = 400;
 	this->windowSize.y = 400;
-
-	// Create the background sprite
-	this->backgroundSprite = new CustomSprite("assets/sprites/15x15-256x256-212f-main-menu.jpg", true, 212, 15.0f, 15, 15);
-	this->backgroundSprite->setScale(static_cast<float>(windowSize.x) / 256, static_cast<float>(windowSize.y) / 256);
 }
 
 MainMenu::MainMenuData MainMenu::getMainMenuData() {
@@ -64,6 +60,10 @@ bool MainMenu::showMainMenu() {
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(this->windowSize.x, this->windowSize.y), "Tetris Main Menu", sf::Style::Close);
 	window.setFramerateLimit(60);
+
+	// Background sprite
+	this->backgroundSprite = std::make_unique<CustomSprite>("assets/sprites/15x15-256x256-212f-main-menu.jpg", true, 212, 15.0f, 15, 15);
+	this->backgroundSprite->setScale(static_cast<float>(windowSize.x) / 256, static_cast<float>(windowSize.y) / 256);
 	sf::Event event;
 
 	sf::RectangleShape onePlayerButton = this->createButton(&window, 50, 30, sf::Color(100, 100, 100), 130, 130);

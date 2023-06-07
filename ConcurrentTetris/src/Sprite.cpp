@@ -27,11 +27,6 @@ void CustomSprite::setScale(float scaleX, float scaleY)
     this->sprite.setScale(scaleX, scaleY);
 }
 
-sf::Texture CustomSprite::getTexture()
-{
-    return this->texture;
-}
-
 void CustomSprite::draw(sf::RenderWindow& window)
 {
     if (this->isAnimation) {

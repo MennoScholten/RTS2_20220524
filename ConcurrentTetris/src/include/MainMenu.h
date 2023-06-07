@@ -16,7 +16,7 @@ private:
     sf::Font fontNormal;
     sf::Font fontBold;
     sf::Vector2i windowSize;
-    CustomSprite* backgroundSprite;
+    std::unique_ptr<CustomSprite> backgroundSprite;
 
 public:
     MainMenu();
