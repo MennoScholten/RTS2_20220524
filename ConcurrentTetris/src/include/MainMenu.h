@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "Player.h"
+#include "include/sprite.h"
 
 class MainMenu {
 public:
@@ -15,6 +16,7 @@ private:
     sf::Font fontNormal;
     sf::Font fontBold;
     sf::Vector2i windowSize;
+    CustomSprite* backgroundSprite;
 
 public:
     MainMenu();

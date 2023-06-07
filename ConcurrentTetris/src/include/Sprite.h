@@ -8,6 +8,7 @@ public:
     void draw(sf::RenderWindow& window);
     void setPosition(float x, float y);
     void setScale(float scaleX, float scaleY);
+    sf::Texture getTexture();
 
 private:
     void updateAnimation();

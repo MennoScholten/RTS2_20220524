@@ -10,6 +10,10 @@ MainMenu::MainMenu() {
 	this->fontBold.loadFromFile("assets/fonts/PixelOperator-Bold.ttf");
 	this->windowSize.x = 400;
 	this->windowSize.y = 400;
+
+	// Create the background sprite
+	this->backgroundSprite = new CustomSprite("assets/sprites/15x15-256x256-212f-main-menu.jpg", true, 212, 15.0f, 15, 15);
+	this->backgroundSprite->setScale(static_cast<float>(windowSize.x) / 256, static_cast<float>(windowSize.y) / 256);
 }
 
 MainMenu::MainMenuData MainMenu::getMainMenuData() {
@@ -91,6 +95,9 @@ bool MainMenu::showMainMenu() {
 			}
         }
 		window.clear();
+		// Draw the background sprite
+		this->backgroundSprite->draw(window);
+
 		window.draw(onePlayerButton);
 		window.draw(twoPlayerButton);
 		window.draw(playButton);
