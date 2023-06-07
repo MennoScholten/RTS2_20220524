@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include "Player.h"
-#include "include/sprite.h"
+#include "sprite.h"
 
 class MainMenu {
 public:
