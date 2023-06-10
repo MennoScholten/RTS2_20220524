@@ -178,8 +178,43 @@ void Tetromino::rotateClockwise(Gameboard* board) {
             int newY = this->pivotPoint.y - relativeX;
             board->moveBlock(block, newX, newY);
         }
+        return;
     }
-    // Else wallkick and try again?
+    // wallkick
+    else {
+        if (this->checkIfMoveIsValid(board, 0, 2, false)) {
+            //std::cout << "move +2 valid!" << std::endl;
+            moveRight(board);
+            moveRight(board);
+
+            if (this->checkIfMoveIsValid(board, 0, 0, true)) {
+                for (auto block : blocks) {
+                    int relativeX = block->getPositionX() - this->pivotPoint.x;
+                    int relativeY = block->getPositionY() - this->pivotPoint.y;
+                    int newX = this->pivotPoint.x + relativeY;
+                    int newY = this->pivotPoint.y - relativeX;
+                    board->moveBlock(block, newX, newY);
+                }
+            }
+            return;
+        }
+        else if (this->checkIfMoveIsValid(board, 0, -2, false)) {
+            //std::cout << "move -2 valid!" << std::endl;
+            moveLeft(board);
+            moveLeft(board);
+            if (this->checkIfMoveIsValid(board, 0, 0, true)) {
+                for (auto block : blocks) {
+                    int relativeX = block->getPositionX() - this->pivotPoint.x;
+                    int relativeY = block->getPositionY() - this->pivotPoint.y;
+                    int newX = this->pivotPoint.x + relativeY;
+                    int newY = this->pivotPoint.y - relativeX;
+                    board->moveBlock(block, newX, newY);
+                }
+            }
+            return;
+        }
+    }
+
 }
 
 void Tetromino::moveRight(Gameboard* board) {
