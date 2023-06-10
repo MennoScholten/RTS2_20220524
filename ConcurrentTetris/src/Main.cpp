@@ -51,6 +51,7 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
         (void) timespec_get(&job_end, TIME_UTC);
         sleep.tv_nsec = timer.tv_nsec - (job_end.tv_nsec - job_start.tv_nsec);
         std::this_thread::sleep_for(std::chrono::nanoseconds(sleep.tv_nsec));
+        std::cout << "Sleeptime: " << sleep.tv_nsec << std::endl;
         (void) timespec_get(&job_start, TIME_UTC);
 
         // Move the active tetrimino down

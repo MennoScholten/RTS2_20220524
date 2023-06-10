@@ -2,20 +2,28 @@
 
 // Constructor
 Window::Window(int width, int height, const std::string& windowName)
-    : GRID_COLOR(sf::Color(50, 50, 50, 255)), 
+    : GRID_COLOR(sf::Color(190, 190, 190, 255)), 
     GRID_THICKNESS(.50),
     SCOREBOARD_HEIGHT(150),
     SCOREBOARD_SPACER(10),
-    BLOCK_OUTLINE_COLOR(sf::Color(20, 20, 20, 255)),
-    BLOCK_OUTLINE_THICKNESS(2),
-    SCOREBOARD_COLOR(sf::Color(10, 10, 20, 255))
+    BLOCK_OUTLINE_COLOR(sf::Color(100, 100, 100, 255)),
+    BLOCK_OUTLINE_THICKNESS(1),
+    SCOREBOARD_COLOR(sf::Color(75, 75, 75, 125))
 {
     // Create the window
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
     window.setFramerateLimit(120);
+    this->gamebackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/MetalBackground.jpg", false, 0, 0.0f, 0, 0);
+    this->gamebackgroundSprite->setScale(static_cast<float>(width) / 1920, static_cast<float>(height + SCOREBOARD_HEIGHT) / 1200);
+
+    this->ScoreBoardbackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/TetrisWoodBackground.jpg", false, 0, 0.0f, 0, 0);
+    this->ScoreBoardbackgroundSprite->setPosition(0, 0);
+    this->ScoreBoardbackgroundSprite->setScale(static_cast<float>(width) / 579, static_cast<float>(SCOREBOARD_HEIGHT) / 393);
+    
 }
 
 void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVector, int blockWidth, int blockHeight) {
+    this->gamebackgroundSprite->draw(window);
     for (int X = 0; X < gameboardColorVector.size(); X++) {
         for (int Y = 0; Y < gameboardColorVector[0].size(); Y++) {
             if (gameboardColorVector[X][Y] != sf::Color::Transparent) {
@@ -38,6 +46,7 @@ void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVec
                 block.setOutlineThickness(GRID_THICKNESS);
                 block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
+
             }
         }
     }
@@ -45,6 +54,7 @@ void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVec
 
 void Window::drawScoreboard(int score1, int score2, int time)
 {
+    this->ScoreBoardbackgroundSprite->draw(window);
     sf::Text mainText;
     sf::Text scoreTextP1;
     sf::Text scoreTextP2;
@@ -53,12 +63,13 @@ void Window::drawScoreboard(int score1, int score2, int time)
     font.loadFromFile("assets/fonts/PixelOperator.ttf");
     mainText.setFont(font);
     mainText.setString("Scoreboard");
+    mainText.setStyle(sf::Text::Bold);
     mainText.setCharacterSize(32); // in pixels, not points!
     mainText.setFillColor(GRID_COLOR);
     mainText.setStyle(sf::Text::Italic | sf::Text::Underlined);
     mainText.setPosition(
         window.getSize().x / 2 - mainText.getGlobalBounds().width / 2,
-        (SCOREBOARD_SPACER) - mainText.getGlobalBounds().height);
+        (SCOREBOARD_SPACER * 2) - mainText.getGlobalBounds().height);
 
     scoreTextP1.setFont(font);
     scoreTextP1.setString("Player1: " + std::to_string(score1));
@@ -85,11 +96,11 @@ void Window::drawScoreboard(int score1, int score2, int time)
     timeText.setStyle(sf::Text::Italic);
     timeText.setPosition(
         window.getSize().x / 2 - timeText.getGlobalBounds().width / 2,
-        (SCOREBOARD_HEIGHT - SCOREBOARD_SPACER) - 6 * timeText.getGlobalBounds().height);
+        (SCOREBOARD_HEIGHT + SCOREBOARD_SPACER / 2) - 6 * timeText.getGlobalBounds().height);
 
-    sf::RectangleShape block(sf::Vector2f(window.getSize().x, SCOREBOARD_HEIGHT - SCOREBOARD_SPACER));
+    sf::RectangleShape block(sf::Vector2f(window.getSize().x / 2.5, SCOREBOARD_HEIGHT - SCOREBOARD_SPACER*2));
     block.setFillColor(SCOREBOARD_COLOR);
-    block.setPosition(0, 0);
+    block.setPosition(window.getSize().x / 3.33, SCOREBOARD_SPACER);
     window.draw(block);
     window.draw(mainText);
     window.draw(scoreTextP1);
