@@ -20,6 +20,16 @@ Window::Window(int width, int height, const std::string& windowName)
     this->ScoreBoardbackgroundSprite->setPosition(0, 0);
     this->ScoreBoardbackgroundSprite->setScale(static_cast<float>(width) / 579, static_cast<float>(SCOREBOARD_HEIGHT) / 393);
     
+    // number sprites:
+
+    //number1->setPosition(width/2, 0);
+    number1->setScale(static_cast<float>(200) / 320, static_cast<float>(200) / 320);
+    //number2->setPosition(width / 2, SCOREBOARD_HEIGHT*3);
+    number2->setScale(static_cast<float>(200) / 720, static_cast<float>(200) / 720);
+    //number3->setPosition(width / 2, SCOREBOARD_HEIGHT*3);
+    number3->setScale(static_cast<float>(200) / 2400, static_cast<float>(200) / 2400);
+    //number4->setPosition(width / 2, SCOREBOARD_HEIGHT*3);
+    number4->setScale(static_cast<float>(200) / 1280, static_cast<float>(200) / 1024);
 }
 
 void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVector, int blockWidth, int blockHeight) {
@@ -55,6 +65,7 @@ void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVec
 void Window::drawScoreboard(int score1, int score2, int time)
 {
     this->ScoreBoardbackgroundSprite->draw(window);
+    drawSprite();
     sf::Text mainText;
     sf::Text scoreTextP1;
     sf::Text scoreTextP2;
@@ -106,4 +117,31 @@ void Window::drawScoreboard(int score1, int score2, int time)
     window.draw(scoreTextP1);
     window.draw(scoreTextP2);
     window.draw(timeText);
+}
+
+void Window::setNumberSprite(int spritenr) {
+    this->spritenr = spritenr;
+}
+
+void Window::drawSprite() {
+    if (this->spritenr == 1) {
+        //std::cout << "Draw sprite nr 1" << std::endl;
+        this->number1->draw(window);
+    }
+    else if (this->spritenr == 2) {
+        //std::cout << "Draw sprite nr 2" << std::endl;
+        this->number2->draw(window);
+    }
+    else if (this->spritenr == 3) {
+        //std::cout << "Draw sprite nr 3" << std::endl;
+        this->number3->draw(window);
+    }
+    else if (this->spritenr == 4) {
+        //std::cout << "Draw sprite nr 4" << std::endl;
+        this->number4->draw(window);
+    }
+    else {
+
+    }
+    
 }

@@ -18,7 +18,7 @@
 
 bool terminateThreads = false;
 
-void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler)
+void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandler* inputHandler, int & currentCleared)
 {
     const int GAME_TICK_DURATION = 500; // ms
 
@@ -68,10 +68,11 @@ void gameLogicThread(std::vector<Player*> players, Gameboard* board, InputHandle
                 }
             }
             int clearedRows = board->checkFilledRows();
+            currentCleared = clearedRows;
             if (clearedRows >= 1) {
                 player->setScore(player->getScore() + std::pow(6, clearedRows));
             }
-            std::cout << player->getScore();
+            // std::cout << player->getScore();
         }
     }
 }
@@ -85,6 +86,7 @@ void updateTetrominoPosition(Player* player, Gameboard* board) {
 
 int main()
 {
+    int currentCleared = 0;
     MainMenu menu;
     bool menuResult = menu.showMainMenu();
     if (menuResult == false) {
@@ -117,7 +119,7 @@ int main()
     sf::Event event;
 
     // Start the logic thread
-    std::thread gameThread(gameLogicThread, players, &board, &inputHandler);
+    std::thread gameThread(gameLogicThread, players, &board, &inputHandler, std::ref(currentCleared));
     
     time_t startSeconds;
     startSeconds = time(NULL);
@@ -143,10 +145,14 @@ int main()
         gameWindow.drawGameboard(colorVector, BLOCK_WIDTH, BLOCK_HEIGHT);
         if (players.size() > 1) {
             gameWindow.drawScoreboard(players[0]->getScore(), players[1]->getScore(), int(gameSeconds));
+            
+            
         }
         else {
             gameWindow.drawScoreboard(players[0]->getScore(), 0, int(gameSeconds));
         }
+        //std::cout << "Checkfilled rows: " << currentCleared << std::endl;
+        gameWindow.setNumberSprite(currentCleared);
         gameWindow.display();
     }
     terminateThreads = true;
