@@ -12,6 +12,14 @@
 ## *.vcxproj
 ## *.vcxproj.filters
 
+# Build files
+out/
+
+# Drawio
+*.bkp
+
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

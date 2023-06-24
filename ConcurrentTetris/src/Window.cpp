@@ -2,7 +2,7 @@
 
 // Constructor
 Window::Window(int width, int height, const std::string& windowName)
-    : GRID_COLOR(sf::Color(190, 190, 190, 255)), 
+    : GRID_COLOR(sf::Color(50, 50, 50, 255)),
     GRID_THICKNESS(.50),
     SCOREBOARD_HEIGHT(150),
     SCOREBOARD_SPACER(10),
@@ -13,8 +13,8 @@ Window::Window(int width, int height, const std::string& windowName)
     // Create the window
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
     window.setFramerateLimit(120);
-    this->gamebackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/MetalBackground.jpg", false, 0, 0.0f, 0, 0);
-    this->gamebackgroundSprite->setScale(static_cast<float>(width) / 1920, static_cast<float>(height + SCOREBOARD_HEIGHT) / 1200);
+    this->gamebackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/gradient_background.png", false, 0, 0.0f, 0, 0);
+    this->gamebackgroundSprite->setScale(static_cast<float>(width) / 1024, static_cast<float>(height + SCOREBOARD_HEIGHT) / 1024);
 
     this->ScoreBoardbackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/TetrisWoodBackground.jpg", false, 0, 0.0f, 0, 0);
     this->ScoreBoardbackgroundSprite->setPosition(0, 0);
