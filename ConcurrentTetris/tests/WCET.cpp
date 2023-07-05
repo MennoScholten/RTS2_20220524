@@ -17,8 +17,6 @@
 #include <unistd.h>
 #endif
 
-// NOTE: assets folder is manually copied to build folder 
-
 std::string GetCurrentWorkingDirectory() {
 std::string cwd;
 #ifdef _WIN32
