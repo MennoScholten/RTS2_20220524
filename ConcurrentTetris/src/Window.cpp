@@ -8,17 +8,18 @@ Window::Window(int width, int height, const std::string& windowName)
     SCOREBOARD_SPACER(10),
     BLOCK_OUTLINE_COLOR(sf::Color(100, 100, 100, 255)),
     BLOCK_OUTLINE_THICKNESS(1),
-    SCOREBOARD_COLOR(sf::Color(75, 75, 75, 125))
+    SCOREBOARD_COLOR(sf::Color(1, 4, 61, 125))
 {
     // Create the window
     window.create(sf::VideoMode(width, height + SCOREBOARD_HEIGHT), windowName, sf::Style::Close);
-    window.setFramerateLimit(120);
-    this->gamebackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/gradient_background.png", false, 0, 0.0f, 0, 0);
-    this->gamebackgroundSprite->setScale(static_cast<float>(width) / 1024, static_cast<float>(height + SCOREBOARD_HEIGHT) / 1024);
+    window.setKeyRepeatEnabled(false);
+    this->gamebackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/gradient_background.png");
+    this->gamebackgroundSprite->setPosition(0, 0 + this->SCOREBOARD_HEIGHT);
+    this->gamebackgroundSprite->setScale(static_cast<float>(width) / 1026, static_cast<float>(height + SCOREBOARD_HEIGHT) / 1026);
 
-    this->ScoreBoardbackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/TetrisWoodBackground.jpg", false, 0, 0.0f, 0, 0);
+    this->ScoreBoardbackgroundSprite = std::make_unique<CustomSprite>("assets/sprites/scoreboard_gradient.png");
     this->ScoreBoardbackgroundSprite->setPosition(0, 0);
-    this->ScoreBoardbackgroundSprite->setScale(static_cast<float>(width) / 579, static_cast<float>(SCOREBOARD_HEIGHT) / 393);
+    this->ScoreBoardbackgroundSprite->setScale(static_cast<float>(width) / 800, static_cast<float>(SCOREBOARD_HEIGHT) / 800);
     
     // number sprites:
 
@@ -32,13 +33,13 @@ Window::Window(int width, int height, const std::string& windowName)
     number4->setScale(static_cast<float>(200) / 1280, static_cast<float>(200) / 1024);
 }
 
-void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVector, int blockWidth, int blockHeight) {
+void Window::drawGameboard(std::vector<std::vector<Block*>> gameboard, int blockWidth, int blockHeight) {
     this->gamebackgroundSprite->draw(window);
-    for (int X = 0; X < gameboardColorVector.size(); X++) {
-        for (int Y = 0; Y < gameboardColorVector[0].size(); Y++) {
-            if (gameboardColorVector[X][Y] != sf::Color::Transparent) {
+    for (int X = 0; X < gameboard.size(); X++) {
+        for (int Y = 0; Y < gameboard[0].size(); Y++) {
+            if (gameboard[X][Y] != nullptr) {
                 sf::RectangleShape block(sf::Vector2f(blockHeight, blockWidth));
-                block.setFillColor(gameboardColorVector[X][Y]);
+                block.setFillColor(gameboard[X][Y]->getColor());
                 block.setPosition(Y * blockHeight, X * blockWidth + SCOREBOARD_HEIGHT);
                 window.draw(block);
                 // Add a outline
@@ -64,7 +65,8 @@ void Window::drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVec
 
 void Window::drawScoreboard(int score1, int score2, int time)
 {
-    this->ScoreBoardbackgroundSprite->draw(window);
+    // this->ScoreBoardbackgroundSprite->draw(window);
+    // Too colorful I think
     drawSprite();
     sf::Text mainText;
     sf::Text scoreTextP1;
@@ -109,9 +111,9 @@ void Window::drawScoreboard(int score1, int score2, int time)
         window.getSize().x / 2 - timeText.getGlobalBounds().width / 2,
         (SCOREBOARD_HEIGHT + SCOREBOARD_SPACER / 2) - 6 * timeText.getGlobalBounds().height);
 
-    sf::RectangleShape block(sf::Vector2f(window.getSize().x / 2.5, SCOREBOARD_HEIGHT - SCOREBOARD_SPACER*2));
+    sf::RectangleShape block(sf::Vector2f(window.getSize().x, SCOREBOARD_HEIGHT));
     block.setFillColor(SCOREBOARD_COLOR);
-    block.setPosition(window.getSize().x / 3.33, SCOREBOARD_SPACER);
+    block.setPosition(0, 0);
     window.draw(block);
     window.draw(mainText);
     window.draw(scoreTextP1);

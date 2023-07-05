@@ -16,8 +16,7 @@
 class InputHandler {
 public:
     InputHandler();
-    char pollingServer();
-    void processInput(const std::vector<Player*>& players, Gameboard* gameboard, sf::Event event);
+    void processInput(Player* player, Gameboard* gameboard);
 
 private:
 };

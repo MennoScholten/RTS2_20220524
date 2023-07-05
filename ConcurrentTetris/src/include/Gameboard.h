@@ -19,12 +19,13 @@ public:
     // Constructor
     Gameboard(int x, int y);
 
-    const std::vector<std::vector<Block*>>& getGameboard() const;
+    const std::vector<std::vector<Block*>> getGameboard() const;
     void getGameboardCopy(std::vector<std::vector<sf::Color>>* colorVector);
-    int getSizeY() const;
     bool checkCollision(int x, int y);
     void addBlock(int x, int y, Block* blockObject);
     void moveBlock(Block* block, int newRow, int newColumn);
     void createLockedBlock(Block* playerBlock);
     int checkFilledRows();
+    int getSizeY() const { return this->y; }
+    int getSizeX() const { return this->x; }
 };

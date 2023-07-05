@@ -37,7 +37,15 @@ add_executable(AllTests
     ${SOURCES})
 
 # Game assets
-add_dependencies(AllTests CopyAssets)
+add_custom_target(CopyTestAssets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
+    COMMENT "Copying assets directory"
+    VERBATIM
+)
+
+# Game assets
+add_dependencies(AllTests CopyTestAssets)
 
 # Link
 target_link_libraries(AllTests PRIVATE GTest::GTest sfml-system sfml-audio sfml-window sfml-graphics)
@@ -47,6 +55,6 @@ add_test(NAME RunTests COMMAND AllTests)
 
 # Add the separate executable for WCET.cpp
 add_executable(WCET "WCET.cpp" ${SOURCES})
-add_dependencies(WCET CopyAssets)
+add_dependencies(WCET CopyTestAssets)
 target_link_libraries(WCET PRIVATE GTest::GTest sfml-system sfml-audio sfml-window sfml-graphics)
 add_test(NAME RunWCET COMMAND WCET)
