@@ -34,7 +34,7 @@ std::string GetCurrentWorkingDirectory()
     return cwd;
 }
 
-void saveMeasurementsToFile(std::vector<long long>& timeArray, const std::string& fileName)
+void saveMeasurementsToFile(const std::vector<long long>& timeArray, const std::string& fileName)
 {
     std::ofstream outputFile(fileName);
     if (outputFile.is_open())
@@ -114,7 +114,7 @@ TEST(TetrisTests, MoveTetrominoWCET)
     Gameboard* board = new Gameboard(20, 20);
     Tetromino* tetromino = new Tetromino();
     tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-    bool gameOver = tetromino->addToGameBoard(board);
+    tetromino->addToGameBoard(board);
     player->setActiveTetrimino(tetromino);
     player->getActiveTetrimino()->moveDown(board);
     player->getActiveTetrimino()->moveDown(board);
@@ -167,7 +167,7 @@ TEST(TetrisTests, UpdateTetrominoPositionWCET)
     Gameboard* board = new Gameboard(20, 20);
     Tetromino* tetromino = new Tetromino();
     tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-    bool gameOver = tetromino->addToGameBoard(board);
+    tetromino->addToGameBoard(board);
     player->setActiveTetrimino(tetromino);
     player->getActiveTetrimino()->moveDown(board);
     player->getActiveTetrimino()->moveDown(board);
@@ -218,7 +218,7 @@ TEST(TetrisTests, GetGameboardWCET)
     Gameboard* board = new Gameboard(10, 20);
     Tetromino* tetromino = new Tetromino();
     tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-    bool gameOver = tetromino->addToGameBoard(board);
+    tetromino->addToGameBoard(board);
     player->setActiveTetrimino(tetromino);
     player->getActiveTetrimino()->moveDown(board);
     player->getActiveTetrimino()->moveDown(board);
@@ -269,7 +269,7 @@ TEST(TetrisTests, DrawScoreboardWCET)
     Gameboard* board = new Gameboard(10, 20);
     Tetromino* tetromino = new Tetromino();
     tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-    bool gameOver = tetromino->addToGameBoard(board);
+    tetromino->addToGameBoard(board);
     player->setActiveTetrimino(tetromino);
     player->getActiveTetrimino()->moveDown(board);
     player->getActiveTetrimino()->moveDown(board);
@@ -329,7 +329,7 @@ TEST(TetrisTests, DrawGameboardWCET)
         Gameboard* board = new Gameboard(10, 20);
         Tetromino* tetromino = new Tetromino();
         tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-        bool gameOver = tetromino->addToGameBoard(board);
+        tetromino->addToGameBoard(board);
         player->setActiveTetrimino(tetromino);
         player->getActiveTetrimino()->moveDown(board);
         player->getActiveTetrimino()->moveDown(board);

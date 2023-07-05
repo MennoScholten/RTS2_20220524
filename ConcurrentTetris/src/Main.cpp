@@ -101,13 +101,12 @@ int main()
     startSeconds = time(NULL);
  
     // Required for printing fps to console
-    float fps;
-    sf::Clock clock = sf::Clock::Clock();
+    sf::Clock clock;
     sf::Time previousTime = clock.getElapsedTime();
     sf::Time currentTime;
 
     // Required to execute gameLogic at interval
-    sf::Clock gameClock = sf::Clock::Clock();
+    sf::Clock gameClock;
     gameClock.restart();
     
 
@@ -132,7 +131,7 @@ int main()
         
         // Print FPS to console
         currentTime = clock.getElapsedTime();
-        fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds());
+        float fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds());
         std::cout << "fps =" << floor(fps) << std::endl;
         previousTime = currentTime;
 
