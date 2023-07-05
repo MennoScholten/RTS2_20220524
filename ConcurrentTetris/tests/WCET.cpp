@@ -6,6 +6,28 @@
 #include <fstream>
 #include <numeric>
 
+#ifdef _WIN32
+#include <Windows.h>
+#define MAX_PATH_LENGTH 260 // Maximum path length on Windows
+#else
+#include <unistd.h>
+#endif
+
+std::string GetCurrentWorkingDirectory()
+{
+    std::string cwd;
+#ifdef _WIN32
+    char buffer[MAX_PATH_LENGTH];
+    GetCurrentDirectoryA(MAX_PATH_LENGTH, buffer);
+    cwd = buffer;
+#else
+    char buffer[PATH_MAX];
+    if (getcwd(buffer, PATH_MAX) != nullptr)
+        cwd = buffer;
+#endif
+    return cwd;
+}
+
 TEST(TetrisTests, PollingWCET)
 {
     InputHandler inputHandler;
@@ -35,7 +57,8 @@ TEST(TetrisTests, PollingWCET)
         << "PollingWCET | Iterations: " << numIterations << " | "
         << "Average: " << sumDuration / numIterations << " | "
         << "Minimum: " << minDuration << " | "
-        << "Maximum: " << minDuration << " | "
+        << "Maximum: " << maxDuration << " | "
+        << "Microseconds "
         << std::endl;
 
     // Save durations to a file
@@ -47,9 +70,11 @@ TEST(TetrisTests, PollingWCET)
             outputFile << duration << std::endl;
         }
         outputFile.close();
+        
+        std::cout << "WCET file saved to: " << GetCurrentWorkingDirectory() << std::endl;
     }
     else
     {
-        std::cerr << "Unable to open file 'results.txt' for writing." << std::endl;
+        std::cout << "Unable to open file, results not written!" << std::endl;
     }
 }
