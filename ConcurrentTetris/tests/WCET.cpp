@@ -8,27 +8,26 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
+#include <stdio.h>
 #include "../src/include/Window.h"
 
 #ifdef _WIN32
 #include <Windows.h>
-#define MAX_PATH_LENGTH 260 // Maximum path length on Windows
 #else
 #include <unistd.h>
 #endif
 
 // NOTE: assets folder is manually copied to build folder 
 
-std::string GetCurrentWorkingDirectory()
-{
-    std::string cwd;
+std::string GetCurrentWorkingDirectory() {
+std::string cwd;
 #ifdef _WIN32
-    char buffer[MAX_PATH_LENGTH];
-    GetCurrentDirectoryA(MAX_PATH_LENGTH, buffer);
+    char buffer[FILENAME_MAX];
+    GetCurrentDirectoryA(FILENAME_MAX, buffer);
     cwd = buffer;
 #else
-    char buffer[PATH_MAX];
-    if (getcwd(buffer, PATH_MAX) != nullptr)
+    char buffer[FILENAME_MAX];
+    if (getcwd(buffer, FILENAME_MAX) != nullptr)
         cwd = buffer;
 #endif
     return cwd;
@@ -45,7 +44,7 @@ void saveMeasurementsToFile(const std::vector<long long>& timeArray, const std::
         }
         outputFile.close();
 
-        std::cout << "WCET measurements file saved to: " << fileName << std::endl;
+        std::cout << "WCET measurements file saved to: " << GetCurrentWorkingDirectory() + fileName << std::endl;
     }
     else
     {

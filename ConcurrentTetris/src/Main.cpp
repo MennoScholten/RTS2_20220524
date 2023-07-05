@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "include/MainMenu.h"
 
+const bool MAIN_MENU = false;
 
 void spawnTetromino(Player* player, Gameboard* board) {
     // Adds new tetromino to the specified player and checks for game over.
@@ -73,6 +74,12 @@ int main()
     int currentCleared = 0;
     MainMenu menu;
     InputHandler inputHandler;
+    if (MAIN_MENU == true) {
+        bool menuResult = menu.showMainMenu();
+        if (menuResult == false) {
+            return 0;
+        }
+    }
 
     MainMenu::MainMenuData userSelection = menu.getMainMenuData();
     const int GAMEBOARD_HEIGHT = userSelection.boardDimensions.y;
