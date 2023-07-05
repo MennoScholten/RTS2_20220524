@@ -7,6 +7,44 @@ InputHandler::InputHandler() {
 bool upArrowPressed = true;
 bool upArrowReleased;
 
+char InputHandler::pollingServer()
+{
+#ifdef _WIN32
+    if (_kbhit())
+    {
+        return _getch();
+    }
+#else
+    struct termios oldSettings, newSettings;
+    tcgetattr(STDIN_FILENO, &oldSettings);
+    newSettings = oldSettings;
+    newSettings.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newSettings);
+
+    int character = 0;
+    fd_set set;
+    struct timeval timeout;
+
+    FD_ZERO(&set);
+    FD_SET(STDIN_FILENO, &set);
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 0;
+
+    if (select(STDIN_FILENO + 1, &set, NULL, NULL, &timeout) > 0)
+    {
+        character = getchar();
+    }
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldSettings);
+
+    if (character != 0)
+    {
+        return character;
+    }
+#endif
+    return '\0';
+}
+
 void InputHandler::processInput(const std::vector<Player*>& players, Gameboard* gameboard, sf::Event event) {
     static std::set<sf::Keyboard::Key> pressedKeys;
 

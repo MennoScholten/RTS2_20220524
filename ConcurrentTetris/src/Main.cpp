@@ -92,6 +92,7 @@ int main()
     if (menuResult == false) {
         return 0;
     }
+
     MainMenu::MainMenuData userSelection = menu.getMainMenuData();
     const int GAMEBOARD_HEIGHT = userSelection.boardDimensions.y;
     const int GAMEBOARD_WIDTH = userSelection.boardDimensions.x;

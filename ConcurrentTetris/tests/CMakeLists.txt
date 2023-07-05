@@ -1,3 +1,8 @@
+cmake_minimum_required(VERSION 3.12)
+project(TetrisTests)
+
+set(CMAKE_CXX_STANDARD 11)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -24,12 +29,12 @@ set(SOURCES
     ../src/Sprite.cpp
 )
 
-# Add the executable
+# Add the executable for all tests
 add_executable(AllTests 
-"GameboardTests.cpp" 
-"TetrominoTests.cpp" 
-"SpriteTests.cpp" 
-${SOURCES})
+    "GameboardTests.cpp" 
+    "TetrominoTests.cpp" 
+    "SpriteTests.cpp" 
+    ${SOURCES})
 
 # Game assets
 add_dependencies(AllTests CopyAssets)
@@ -39,3 +44,9 @@ target_link_libraries(AllTests PRIVATE GTest::GTest sfml-system sfml-audio sfml-
 
 # Add a test for running all the tests
 add_test(NAME RunTests COMMAND AllTests)
+
+# Add the separate executable for WCET.cpp
+add_executable(WCET "WCET.cpp" ${SOURCES})
+add_dependencies(WCET CopyAssets)
+target_link_libraries(WCET PRIVATE GTest::GTest sfml-system sfml-audio sfml-window sfml-graphics)
+add_test(NAME RunWCET COMMAND WCET)
