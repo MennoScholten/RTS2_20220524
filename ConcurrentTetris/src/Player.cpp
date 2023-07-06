@@ -40,6 +40,14 @@ sf::Keyboard::Key Player::getDropKey() {
     return Player::dropKey;
 }
 
+void Player::setLastPressedKey(sf::Keyboard::Key key) {
+    this->lastPressedKey = key;
+}
+
+sf::Keyboard::Key Player::getLastPressedKey() {
+    return this->lastPressedKey;
+}
+
 sf::Color Player::getColor()
 {
     return this->playerColor;

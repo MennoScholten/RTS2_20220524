@@ -8,28 +8,8 @@ Gameboard::Gameboard(int x, int y) {
     this->y = y;
 }
 
-const std::vector<std::vector<Block*>>& Gameboard::getGameboard() const {
+const std::vector<std::vector<Block*>> Gameboard::getGameboard() const {
     return this->board;
-}
-
-void Gameboard::getGameboardCopy(std::vector<std::vector<sf::Color>>* colorVector)
-{
-    std::lock_guard<std::mutex> lock(this->boardMutex);
-    for (int i = 0; i < this->x; i++) {
-        for (int j = 0; j < this->y; j++) {
-            if (board[i][j] != nullptr) {
-                (*colorVector)[i][j] = this->board[i][j]->getColor();
-            }
-            else {
-                (*colorVector)[i][j] = sf::Color::Transparent;
-            }
-        }
-    }
-}
-
-int Gameboard::getSizeY() const
-{
-    return this->y;
 }
 
 void Gameboard::addBlock(int x, int y, Block* blockObject) {

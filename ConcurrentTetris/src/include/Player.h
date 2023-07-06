@@ -11,6 +11,8 @@ public:
     sf::Keyboard::Key getMoveRightKey();
     sf::Keyboard::Key getRotateKey();
     sf::Keyboard::Key getDropKey();
+    void setLastPressedKey(sf::Keyboard::Key key);
+    sf::Keyboard::Key getLastPressedKey();
     sf::Color getColor();
     void setActiveTetrimino(Tetromino* tetromino);
     Tetromino* getActiveTetrimino();
@@ -19,6 +21,7 @@ private:
     int score = 0;
     Tetromino* activeTetromino;
     sf::Color playerColor;
+    sf::Keyboard::Key lastPressedKey;
     sf::Keyboard::Key moveLeftKey;
     sf::Keyboard::Key moveRightKey;
     sf::Keyboard::Key rotateKey;

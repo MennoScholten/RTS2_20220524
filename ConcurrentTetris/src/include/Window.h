@@ -4,6 +4,7 @@
 #include "Block.h"
 #include <iostream>
 #include "Sprite.h"
+#include "Player.h"
 
 class Window
 {
@@ -12,10 +13,11 @@ public:
     Window(int width, int height, const std::string& windowName);
 
     // Drawing functions
-    void drawGameboard(std::vector<std::vector<sf::Color>> gameboardColorVector, int blockWidth, int blockHeight);
+    void drawGameboard(std::vector<std::vector<Block*>> gameboardColorVector, int blockWidth, int blockHeight);
     void drawScoreboard(int score1, int score2, int time);
     void setNumberSprite(int spritenr);
     void drawSprite();
+    void updateTetrominoPosition(Player* player, Gameboard* board);
     // Builtin passthrough
     bool isOpen() { return window.isOpen(); }
     bool pollEvent(sf::Event& event) { return window.pollEvent(event); }
@@ -23,6 +25,7 @@ public:
     void clear() { window.clear(); }
     void display() { window.display(); }
     bool setActive(bool active) { return window.setActive(active); }
+    void setFramerateLimit(unsigned int limit) { window.setFramerateLimit(limit); }
 
     
 private:
