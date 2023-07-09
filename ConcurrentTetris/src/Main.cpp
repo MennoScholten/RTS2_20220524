@@ -16,7 +16,6 @@
 #include "include/MainMenu.h"
 
 const bool MAIN_MENU = false;
-constexpr auto THREADED = true;
 
 void spawnTetromino(Player* player, Gameboard* board) {
     // Adds new tetromino to the specified player and checks for game over.
