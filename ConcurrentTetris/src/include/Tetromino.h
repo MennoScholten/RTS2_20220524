@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Block.h"
+#include "Globals.h"
 #include <algorithm>
 #include <random>
 

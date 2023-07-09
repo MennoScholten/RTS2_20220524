@@ -13,7 +13,7 @@ const std::vector<std::vector<Block*>> Gameboard::getGameboard() const {
 }
 
 void Gameboard::addBlock(int x, int y, Block* blockObject) {
-    std::lock_guard<std::mutex> lock(this->boardMutex);
+    // std::lock_guard<std::mutex> lock(this->boardMutex);
     this->board[x][y] = blockObject;
     blockObject->setPosition(x, y);
 }
@@ -26,7 +26,7 @@ void Gameboard::createLockedBlock(Block* playerBlock) {
 
 bool Gameboard::checkCollision(int x, int y)
 {
-    std::lock_guard<std::mutex> lock(this->boardMutex);
+    // std::lock_guard<std::mutex> lock(this->boardMutex);
     if (x < 0 || x >= this->board.size() || y < 0 || y >= this->board[0].size())
     {
         return true; // Invalid indices, consider it as occupied
@@ -40,7 +40,7 @@ bool Gameboard::checkCollision(int x, int y)
 }
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {
-    std::lock_guard<std::mutex> lock(this->boardMutex);
+    // std::lock_guard<std::mutex> lock(this->boardMutex);
     if (this->board[block->getPositionX()][block->getPositionY()] == block) {
         this->board[block->getPositionX()][block->getPositionY()] = nullptr;
         this->board[newX][newY] = block;
@@ -53,7 +53,7 @@ void Gameboard::moveBlock(Block* block, int newX, int newY) {
 }
 
 int Gameboard::checkFilledRows() {
-    std::unique_lock<std::mutex> lock(this->boardMutex);
+    // std::unique_lock<std::mutex> lock(this->boardMutex);
     int clearedRows = 0;
     int row = this->x - 1;
     while (row >= 0) {
@@ -66,9 +66,9 @@ int Gameboard::checkFilledRows() {
                     this->board[block->getPositionX()][block->getPositionY()] = nullptr;
                     delete block;
                 }
-                lock.unlock();
+                // lock.unlock();
                 this->moveAllBlocksDown(row);
-                lock.lock();
+                // lock.lock();
                 row = this->x - 1;
                 continue;
             }
