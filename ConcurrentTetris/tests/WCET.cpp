@@ -100,7 +100,11 @@ TEST(TetrisTests, MoveTetrominoWCET)
     InputHandler inputHandler;
 
     // How many measurements to take
-    const int numIterations = 10000;
+    int numIterations = 10000;
+
+    if (Globals::THREADED) {
+        numIterations = 1000;
+    }
 
     // Logging
     std::vector<long long> timeArray;
@@ -153,7 +157,11 @@ TEST(TetrisTests, UpdateTetrominoPositionWCET)
     InputHandler inputHandler;
 
     // How many measurements to take
-    const int numIterations = 10000;
+    int numIterations = 10000;
+
+    if (Globals::THREADED) {
+        numIterations = 1000;
+    }
 
     // Logging
     std::vector<long long> timeArray;
@@ -204,7 +212,7 @@ TEST(TetrisTests, GetGameboardWCET)
     InputHandler inputHandler;
 
     // How many measurements to take
-    const int numIterations = 1000;
+    const int numIterations = 10000;
 
     // Logging
     std::vector<long long> timeArray;

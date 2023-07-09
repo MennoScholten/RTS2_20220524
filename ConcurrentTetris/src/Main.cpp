@@ -34,7 +34,6 @@ void moveTetrominoDown(Player* player, Gameboard* board) {
     // Moves the specified player's active Tetromino down.
     bool wasBlockMoved = player->getActiveTetrimino()->moveDown(board);
     std::cout << "Move Down: " << wasBlockMoved << "\n";
-    // bool wasBlockMoved = true;
     if (wasBlockMoved == false) {
         player->getActiveTetrimino()->freezeToBoard(board);
         delete player->getActiveTetrimino();

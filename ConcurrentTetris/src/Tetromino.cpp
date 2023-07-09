@@ -1,5 +1,7 @@
 #include "include/Tetromino.h"
 #include <iostream>
+#include <thread>
+
 Tetromino::Tetromino() {
     std::fill(blocks.begin(), blocks.end(), nullptr);
 }
@@ -268,22 +270,60 @@ void Tetromino::moveDrop(Gameboard* board) {
 }
 
 bool Tetromino::checkIfMoveIsValid(Gameboard* board, int tetrominoNewX, int tetrominoNewY, bool rotation) {
-    std::vector<bool> isValid;
-    int newX, newY;
-    for (auto block : this->blocks) {
-        if (rotation) {
-            int relativeX = block->getPositionX() - this->pivotPoint.x;
-            int relativeY = block->getPositionY() - this->pivotPoint.y;
-            newX = this->pivotPoint.x + relativeY;
-            newY = this->pivotPoint.y - relativeX;
+    std::vector<bool> isValid(this->blocks.size(), false);
+    std::vector<std::thread> threads;
+
+    for (size_t i = 0; i < blocks.size(); i++) {
+
+        // Check for block collisions with separate thread for each
+        if (Globals::THREADED) {
+
+            // Thread executes the code within lambda function
+            threads.emplace_back([&, i]() {
+                int newX, newY;
+                Block* block = blocks[i];
+
+                if (rotation) {
+                    int relativeX = block->getPositionX() - pivotPoint.x;
+                    int relativeY = block->getPositionY() - pivotPoint.y;
+                    newX = pivotPoint.x + relativeY;
+                    newY = pivotPoint.y - relativeX;
+                }
+                else {
+                    newX = block->getPositionX() + tetrominoNewX;
+                    newY = block->getPositionY() + tetrominoNewY;
+                }
+
+                isValid[i] = board->checkCollision(newX, newY);
+            });
         }
+
+        // Check for block collisions without threading
         else {
-            newX = block->getPositionX() + tetrominoNewX;
-            newY = block->getPositionY() + tetrominoNewY;
+            int newX, newY;
+            Block* block = this->blocks[i];
+
+            if (rotation) {
+                int relativeX = block->getPositionX() - this->pivotPoint.x;
+                int relativeY = block->getPositionY() - this->pivotPoint.y;
+                newX = this->pivotPoint.x + relativeY;
+                newY = this->pivotPoint.y - relativeX;
+            }
+            else {
+                newX = block->getPositionX() + tetrominoNewX;
+                newY = block->getPositionY() + tetrominoNewY;
+            }
+            isValid[i] = board->checkCollision(newX, newY);
         }
-        // Check for collisions
-        isValid.push_back(board->checkCollision(newX, newY));
     }
+
+    // Wait for all threads to finish
+    if (Globals::THREADED) {
+        for (auto& thread : threads) {
+            thread.join();
+        }
+    }
+
     return !std::any_of(isValid.begin(), isValid.end(), [](bool status) { return status; });
 }
 
