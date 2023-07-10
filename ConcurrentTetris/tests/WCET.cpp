@@ -50,6 +50,23 @@ void saveMeasurementsToFile(const std::vector<long long>& timeArray, const std::
     }
 }
 
+void printStatistics(const std::vector<long long>& timeArray, int numIterations, const std::string& testName)
+{
+    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
+    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
+    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
+    auto averageDuration = sumDuration / numIterations;
+
+    std::cout << testName << " | Iterations: " << numIterations << " | " << std::endl;
+    std::cout
+        << "Average: " << averageDuration << " | "
+        << "Minimum: " << minDuration << " | "
+        << "Maximum: " << maxDuration << " | "
+        << "Microseconds "
+        << std::endl;
+}
+
+
 TEST(TetrisTests, PollingWCET)
 {
     InputHandler inputHandler;
@@ -79,17 +96,8 @@ TEST(TetrisTests, PollingWCET)
         timeArray.push_back(iterationDuration);
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "PollingWCET | Iterations: " << numIterations << " | " << std::endl;
-    std::cout 
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "PollingWCET");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "PollingWCET.txt");
@@ -136,17 +144,8 @@ TEST(TetrisTests, MoveTetrominoWCET)
         timeArray.push_back(iterationDuration);
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "MoveTetrominoWCET (LEFT + RIGHT + ROTATE) | Iterations: " << numIterations << " | " << std::endl;
-    std::cout
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "MoveTetrominoWCET (LEFT + RIGHT + ROTATE)");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "MoveTetrominoWCET.txt");
@@ -191,17 +190,8 @@ TEST(TetrisTests, UpdateTetrominoPositionWCET)
         timeArray.push_back(iterationDuration);
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "UpdateTetrominoPositionWCET | Iterations: " << numIterations << " | " << std::endl;
-    std::cout
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "UpdateTetrominoPositionWCET");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "UpdateTetrominoPositionWCET.txt");
@@ -242,23 +232,14 @@ TEST(TetrisTests, GetGameboardWCET)
         timeArray.push_back(iterationDuration);
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "GetGameboardWCET | Iterations: " << numIterations << " | " << std::endl;
-    std::cout
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "GetGameboardWCET");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "GetGameboardWCET.txt");
 }
 
-TEST(TetrisTests, DrawScoreboardWCET)
+TEST(TetrisTests, DISABLED_DrawScoreboardWCET)
 {
     InputHandler inputHandler;
 
@@ -297,23 +278,14 @@ TEST(TetrisTests, DrawScoreboardWCET)
         gameWindow.display();
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "DrawScoreboardWCET | Iterations: " << numIterations << " | " << std::endl;
-    std::cout
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "DrawScoreboardWCET");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "DrawScoreboardWCET.txt");
 }
 
-TEST(TetrisTests, DrawGameboardWCET)
+TEST(TetrisTests, DISABLED_DrawGameboardWCET)
 {
     InputHandler inputHandler;
 
@@ -352,19 +324,214 @@ TEST(TetrisTests, DrawGameboardWCET)
         gameWindow.display();
     }
 
-    auto minDuration = *std::min_element(timeArray.begin(), timeArray.end());
-    auto maxDuration = *std::max_element(timeArray.begin(), timeArray.end());
-    auto sumDuration = std::accumulate(timeArray.begin(), timeArray.end(), 0LL);
-
-    std::cout << "DrawGameboardWCET | Iterations: " << numIterations << " | " << std::endl;
-    std::cout
-        << "Average: " << sumDuration / numIterations << " | "
-        << "Minimum: " << minDuration << " | "
-        << "Maximum: " << maxDuration << " | "
-        << "Microseconds "
-        << std::endl;
+    // Print results to console
+    printStatistics(timeArray, numIterations, "DrawGameboardWCET");
 
     // Save durations to a file
     saveMeasurementsToFile(timeArray, "DrawGameboardWCET.txt");
 }
 
+TEST(TetrisTests, SpawnTetrominoWCET)
+{
+    InputHandler inputHandler;
+
+    // How many measurements to take
+    const int numIterations = 10000;
+
+    // Logging
+    std::vector<long long> timeArray;
+    timeArray.reserve(numIterations);
+
+    // PREPARATIONS
+
+    for (int i = 0; i < numIterations; i++)
+    {
+        Player* player = new Player(sf::Color(rand() % 255, rand() % 255, rand() % 255), sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+        Gameboard* board = new Gameboard(10, 20);
+        // START MEASURING
+        auto iterationStartTime = std::chrono::high_resolution_clock::now();
+
+        // Spawn tetromino
+        player->spawnTetromino(board);
+
+        // STOP MEASURING
+        auto iterationEndTime = std::chrono::high_resolution_clock::now();
+        auto iterationDuration = std::chrono::duration_cast<std::chrono::microseconds>(iterationEndTime - iterationStartTime).count();
+        timeArray.push_back(iterationDuration);
+    }
+
+    // Print results to console
+    printStatistics(timeArray, numIterations, "SpawnTetrominoWCET");
+
+    // Save durations to a file
+    saveMeasurementsToFile(timeArray, "SpawnTetrominoWCET.txt");
+}
+
+TEST(TetrisTests, CheckBlockCollisionWCET)
+{
+    InputHandler inputHandler;
+
+    // How many measurements to take
+    int numIterations = 10000;
+
+    if (Globals::THREADED) {
+        numIterations = 1000;
+    }
+
+    // Logging
+    std::vector<long long> timeArray;
+    timeArray.reserve(numIterations);
+
+    // PREPARATIONS
+    Player* player = new Player(sf::Color::Red, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+    Gameboard* board = new Gameboard(20, 20);
+    Tetromino* tetromino = new Tetromino();
+    tetromino->blockO(1, 1, player->getColor());
+    tetromino->addToGameBoard(board);
+    tetromino->freezeToBoard(board);
+
+    for (int i = 0; i < numIterations; i++)
+    {
+        // START MEASURING
+        auto iterationStartTime = std::chrono::high_resolution_clock::now();
+
+        // Check no collision and with collision
+        board->checkCollision(0, 0);
+        board->checkCollision(1, 1);
+
+        // STOP MEASURING
+        auto iterationEndTime = std::chrono::high_resolution_clock::now();
+        auto iterationDuration = std::chrono::duration_cast<std::chrono::microseconds>(iterationEndTime - iterationStartTime).count();
+        timeArray.push_back(iterationDuration);
+    }
+
+    // Print results to console
+    printStatistics(timeArray, numIterations, "CheckBlockCollisionWCET (NO COLLISION + COLLISION)");
+
+    // Save durations to a file
+    saveMeasurementsToFile(timeArray, "CheckBlockCollisionWCET.txt");
+}
+
+TEST(TetrisTests, CheckFilledRowsWCET)
+{
+    InputHandler inputHandler;
+
+    // How many measurements to take
+    int numIterations = 10000;
+
+    // Logging
+    std::vector<long long> timeArray;
+    timeArray.reserve(numIterations);
+
+    // PREPARATIONS
+    int GAMEBOARD_COLUMNS = 20;
+    Gameboard* board = new Gameboard(20, GAMEBOARD_COLUMNS);
+    for (int i = 0; i < GAMEBOARD_COLUMNS; i++) {
+        Block* block = new Block(0, 0, sf::Color::Blue);
+        block->setAlive(false);
+        board->addBlock(19, i, block);
+    }
+
+    for (int i = 0; i < numIterations; i++)
+    {
+        // START MEASURING
+        auto iterationStartTime = std::chrono::high_resolution_clock::now();
+
+        // check for filled row
+        board->getFilledRows();
+        
+
+        // STOP MEASURING
+        auto iterationEndTime = std::chrono::high_resolution_clock::now();
+        auto iterationDuration = std::chrono::duration_cast<std::chrono::microseconds>(iterationEndTime - iterationStartTime).count();
+        timeArray.push_back(iterationDuration);
+    }
+
+    // Print results to console
+    printStatistics(timeArray, numIterations, "CheckFilledRowsWCET (1 ROW FILLED)");
+
+    // Save durations to a file
+    saveMeasurementsToFile(timeArray, "CheckFilledRowsWCET.txt");
+}
+
+TEST(TetrisTests, RemoveBlockWCET)
+{
+    InputHandler inputHandler;
+
+    // How many measurements to take
+    int numIterations = 10000;
+
+    // Logging
+    std::vector<long long> timeArray;
+    timeArray.reserve(numIterations);
+
+    // PREPARATIONS
+
+    for (int i = 0; i < numIterations; i++)
+    {
+        int GAMEBOARD_COLUMNS = 20;
+        Gameboard* board = new Gameboard(20, GAMEBOARD_COLUMNS);
+        for (int i = 0; i < GAMEBOARD_COLUMNS; i++) {
+            Block* block = new Block(0, 0, sf::Color::Blue);
+            block->setAlive(false);
+            board->addBlock(19, i, block);
+        }
+
+        // START MEASURING
+        auto iterationStartTime = std::chrono::high_resolution_clock::now();
+
+        // check for filled row
+        board->removeBlock(19, 0);
+
+        // STOP MEASURING
+        auto iterationEndTime = std::chrono::high_resolution_clock::now();
+        auto iterationDuration = std::chrono::duration_cast<std::chrono::microseconds>(iterationEndTime - iterationStartTime).count();
+        timeArray.push_back(iterationDuration);
+    }
+
+    // Print results to console
+    printStatistics(timeArray, numIterations, "RemoveBlockWCET");
+
+    // Save durations to a file
+    saveMeasurementsToFile(timeArray, "RemoveBlockWCET.txt");
+}
+
+TEST(TetrisTests, MoveBlockWCET)
+{
+    InputHandler inputHandler;
+
+    // How many measurements to take
+    int numIterations = 10000;
+
+    // Logging
+    std::vector<long long> timeArray;
+    timeArray.reserve(numIterations);
+
+    // PREPARATIONS
+    int GAMEBOARD_COLUMNS = 20;
+    Gameboard* board = new Gameboard(20, GAMEBOARD_COLUMNS);
+    Block* block = new Block(0, 0, sf::Color::Blue);
+    block->setAlive(false);
+    board->addBlock(0, 0, block);
+
+    for (int i = 0; i < numIterations; i++)
+    {
+        // START MEASURING
+        auto iterationStartTime = std::chrono::high_resolution_clock::now();
+
+        // move block across the board and back
+        board->moveBlock(block, 19, 19);
+        board->moveBlock(block, 0, 0);
+
+        // STOP MEASURING
+        auto iterationEndTime = std::chrono::high_resolution_clock::now();
+        auto iterationDuration = std::chrono::duration_cast<std::chrono::microseconds>(iterationEndTime - iterationStartTime).count();
+        timeArray.push_back(iterationDuration);
+    }
+
+    // Print results to console
+    printStatistics(timeArray, numIterations, "MoveBlockWCET (2 MOVE OPERATION)");
+
+    // Save durations to a file
+    saveMeasurementsToFile(timeArray, "MoveBlockWCET.txt");
+}

@@ -17,19 +17,6 @@
 
 const bool MAIN_MENU = false;
 
-void spawnTetromino(Player* player, Gameboard* board) {
-    // Adds new tetromino to the specified player and checks for game over.
-    Tetromino* tetromino = new Tetromino();
-    sf::Color color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
-    tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, player->getColor());
-    bool gameOver = tetromino->addToGameBoard(board);
-    if (!gameOver) {
-        std::cout << "Game Over!";
-        return;
-    }
-    player->setActiveTetrimino(tetromino);
-}
-
 void moveTetrominoDown(Player* player, Gameboard* board) {
     // Moves the specified player's active Tetromino down.
     bool wasBlockMoved = player->getActiveTetrimino()->moveDown(board);
@@ -44,7 +31,7 @@ void moveTetrominoDown(Player* player, Gameboard* board) {
 void gameLogic(Player* player, Gameboard* board, int& currentCleared) {
     // TASK: Spawn Tetromino
     if (player->getActiveTetrimino() == nullptr) {
-        spawnTetromino(player, board);
+        player->spawnTetromino(board);
     }
 
     // TASK: Move Tetromino down
@@ -54,7 +41,7 @@ void gameLogic(Player* player, Gameboard* board, int& currentCleared) {
     }
 
     // TASK: Clear filled rows
-    int clearedRows = board->checkFilledRows();
+    int clearedRows = board->clearFilledRowsAndShiftBlocks();
     currentCleared = clearedRows;
     if (clearedRows >= 1) {
         player->setScore(player->getScore() + std::pow(6, clearedRows));

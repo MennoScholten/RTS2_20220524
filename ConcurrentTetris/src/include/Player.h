@@ -16,6 +16,7 @@ public:
     sf::Color getColor();
     void setActiveTetrimino(Tetromino* tetromino);
     Tetromino* getActiveTetrimino();
+    void spawnTetromino(Gameboard* board);
 
 private:
     int score = 0;

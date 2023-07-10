@@ -66,7 +66,7 @@ TEST(TetrisTests, TestClearingRows)
         board.addBlock(BOARD_HEIGHT_X - 1, i, block);
         board.addBlock(BOARD_HEIGHT_X - 2, i, block2);
     }
-    int cleared_rows = board.checkFilledRows();
+    int cleared_rows = board.clearFilledRowsAndShiftBlocks();
     ASSERT_EQ(cleared_rows, 2);
     ASSERT_EQ(board.getGameboard()[BOARD_HEIGHT_X-1][0], nullptr);
 }
