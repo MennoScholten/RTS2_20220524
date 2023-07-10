@@ -24,6 +24,19 @@ int Player::setScore(int score)
     return Player::score;
 }
 
+void Player::spawnTetromino(Gameboard* board) {
+    // Adds new tetromino to the specified player and checks for game over.
+    Tetromino* tetromino = new Tetromino();
+    sf::Color color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
+    tetromino->createRandomTetromino(0, board->getSizeY() / 2 - 1, this->getColor());
+    bool gameOver = tetromino->addToGameBoard(board);
+    if (!gameOver) {
+        std::cout << "Game Over!";
+        return;
+    }
+    this->setActiveTetrimino(tetromino);
+}
+
 sf::Keyboard::Key Player::getMoveLeftKey() {
     return Player::moveLeftKey;
 }
@@ -62,4 +75,3 @@ Tetromino* Player::getActiveTetrimino()
 {
     return this->activeTetromino;
 }
-

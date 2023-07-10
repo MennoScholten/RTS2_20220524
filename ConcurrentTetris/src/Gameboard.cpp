@@ -40,7 +40,6 @@ bool Gameboard::checkCollision(int x, int y)
 }
 
 void Gameboard::moveBlock(Block* block, int newX, int newY) {
-    // std::lock_guard<std::mutex> lock(this->boardMutex);
     if (this->board[block->getPositionX()][block->getPositionY()] == block) {
         this->board[block->getPositionX()][block->getPositionY()] = nullptr;
         this->board[newX][newY] = block;
@@ -52,38 +51,69 @@ void Gameboard::moveBlock(Block* block, int newX, int newY) {
     }
 }
 
-int Gameboard::checkFilledRows() {
-    // std::unique_lock<std::mutex> lock(this->boardMutex);
-    int clearedRows = 0;
-    int row = this->x - 1;
-    while (row >= 0) {
-        // Check if any elements in row are nullptr
-        if (std::none_of(this->board[row].begin(), this->board[row].end(), [](Block* block) { return block == nullptr; })) {
-            // Check if any elements in row are still player controlled
-            if (std::all_of(this->board[row].begin(), this->board[row].end(), [](Block* block) { return block->getAlive() == false; })) {
-                clearedRows++;
-                for (Block* block : this->board[row]) {
-                    this->board[block->getPositionX()][block->getPositionY()] = nullptr;
-                    delete block;
-                }
-                // lock.unlock();
-                this->moveAllBlocksDown(row);
-                // lock.lock();
-                row = this->x - 1;
-                continue;
-            }
-        }
-        row--; // Move to the next row
+std::vector<int> Gameboard::getFilledRows() {
+    // Returns array of rows, 
+    std::vector<int> filledRows;
+    for (int row = 0; row < this->x; row++) {
+        bool isFilled = std::all_of(this->board[row].begin(), this->board[row].end(), [](const Block* block) { return block != nullptr; });
+        filledRows.push_back(isFilled ? 1 : 0);
     }
-    return clearedRows;
+    return filledRows;
 }
 
-void Gameboard::moveAllBlocksDown(int row) {
-    for (int i = row - 1; i >= 0; i--) {
-        for (Block* block : this->board[i]) {
-            if (block != nullptr) {
-                this->moveBlock(block, block->getPositionX() + 1, block->getPositionY());
+void Gameboard::removeBlock(int x, int y) {
+    Block* block = this->board[x][y];
+    if (block != nullptr) {
+        this->board[x][y] = nullptr;
+        delete block;
+    }
+}
+
+void Gameboard::clearFilledColumn(const std::vector<int>& filledRowsVector, int column) {
+    int filledRows = std::accumulate(filledRowsVector.begin(), filledRowsVector.end(), 0);
+
+    if (filledRows > 0) {
+        // Remove blocks if they are part of filled row.
+        for (int row = this->board.size() - 1; row >= 0; row--) {
+            if (filledRowsVector[row] == 1) {
+                this->removeBlock(row, column);
+            }
+        }
+        // Start moving blocks down after the first removed row
+        int startingRow = this->board.size() - 1;
+        while (filledRowsVector[startingRow] != 1) {
+            startingRow--;
+        }
+        // Move blocks down in the column
+        for (int row = startingRow; row >= 0; row--) {
+            if (this->board[row][column] != nullptr) {
+                this->moveBlock(board[row][column], board[row][column]->getPositionX() + filledRows, board[row][column]->getPositionY());
+                this->removeBlock(row, column);
             }
         }
     }
+}
+
+int Gameboard::clearFilledRowsAndShiftBlocks() {
+    // Returns the number of rows cleared
+    std::vector<int> filledRowsVector = getFilledRows();
+    std::vector<std::thread> threads;
+
+    if (Globals::THREADED) {
+        for (int column = 0; column < this->board[0].size(); column++) {
+            threads.emplace_back([&, column]() {
+                clearFilledColumn(filledRowsVector, column);
+            });
+        }
+        for (auto& thread : threads) {
+            thread.join();
+        }
+    }
+    else {
+        for (int column = 0; column < this->board[0].size(); column++) {
+            clearFilledColumn(filledRowsVector, column);
+        }
+    }
+
+    return std::accumulate(filledRowsVector.begin(), filledRowsVector.end(), decltype(filledRowsVector)::value_type(0));
 }
