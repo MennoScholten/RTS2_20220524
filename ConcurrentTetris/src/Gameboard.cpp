@@ -55,7 +55,7 @@ std::vector<int> Gameboard::getFilledRows() {
     // Returns array of rows, 
     std::vector<int> filledRows;
     for (int row = 0; row < this->x; row++) {
-        bool isFilled = std::all_of(this->board[row].begin(), this->board[row].end(), [](Block* block) { return block != nullptr; });
+        bool isFilled = std::all_of(this->board[row].begin(), this->board[row].end(), [](const Block* block) { return block != nullptr; });
         filledRows.push_back(isFilled ? 1 : 0);
     }
     return filledRows;
@@ -69,8 +69,8 @@ void Gameboard::removeBlock(int x, int y) {
     }
 }
 
-void Gameboard::clearFilledColumn(const std::vector<int> filledRowsVector, int column) {
-    int filledRows = std::accumulate(filledRowsVector.begin(), filledRowsVector.end(), decltype(filledRowsVector)::value_type(0));
+void Gameboard::clearFilledColumn(const std::vector<int>& filledRowsVector, int column) {
+    int filledRows = std::accumulate(filledRowsVector.begin(), filledRowsVector.end(), 0);
 
     if (filledRows > 0) {
         // Remove blocks if they are part of filled row.

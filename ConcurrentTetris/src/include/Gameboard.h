@@ -6,6 +6,7 @@
 #include <mutex>
 #include <numeric>
 #include "Globals.h"
+#include <thread>
 
 class Gameboard {
 private:
@@ -22,7 +23,7 @@ public:
 
     const std::vector<std::vector<Block*>> getGameboard() const;
     std::vector<int> getFilledRows();
-    void clearFilledColumn(const std::vector<int> filledRows, int column);
+    void clearFilledColumn(const std::vector<int>& filledRows, int column);
     int clearFilledRowsAndShiftBlocks();
     void removeBlock(int x, int y);
     bool checkCollision(int x, int y);

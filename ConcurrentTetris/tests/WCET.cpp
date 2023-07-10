@@ -471,16 +471,16 @@ TEST(TetrisTests, RemoveBlockWCET)
     {
         int GAMEBOARD_COLUMNS = 20;
         Gameboard* board = new Gameboard(20, GAMEBOARD_COLUMNS);
-        for (int i = 0; i < GAMEBOARD_COLUMNS; i++) {
+        for (int column = 0; column < GAMEBOARD_COLUMNS; column++) {
             Block* block = new Block(0, 0, sf::Color::Blue);
             block->setAlive(false);
-            board->addBlock(19, i, block);
+            board->addBlock(19, column, block);
         }
 
         // START MEASURING
         auto iterationStartTime = std::chrono::high_resolution_clock::now();
 
-        // check for filled row
+        // remove block
         board->removeBlock(19, 0);
 
         // STOP MEASURING
