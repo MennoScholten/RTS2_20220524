@@ -1,7 +1,7 @@
 # RTS2_20220524
 
 ## Main menu
-![MainMenu](./mainmenu.mp4)
+![MainMenu](./mainmenu.gif)
 
 ## Gameplay
-![Gameplay](./gameplay.mp4)
+![Gameplay](./gameplay.gif)
