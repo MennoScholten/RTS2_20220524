@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "include/MainMenu.h"
 
-const bool MAIN_MENU = false;
+const bool MAIN_MENU = true;
 
 void moveTetrominoDown(Player* player, Gameboard* board) {
     // Moves the specified player's active Tetromino down.
@@ -112,7 +112,9 @@ int main()
         gameSeconds = time(NULL) - startSeconds;
 
         // TASK: Polling Server
-        inputHandler.processInput(players[0], &board);
+        for (Player* player : players) {
+            inputHandler.processInput(player, &board);
+        }
 
         // The SFML event server
         while (gameWindow.pollEvent(event)) {
@@ -140,7 +142,10 @@ int main()
         std::vector<std::vector<Block*>> currentGameboard = board.getGameboard();
 
         // TASK: Draw Scoreboard
-        gameWindow.drawScoreboard(players[0]->getScore(), 0, int(gameSeconds));
+        for (Player* player : players) {
+            gameWindow.drawScoreboard(player->getScore(), 0, int(gameSeconds));
+        }
+        
 
         // TASK: Draw Gameboard
         gameWindow.drawGameboard(currentGameboard, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -149,7 +154,10 @@ int main()
         const int GAME_TICK_DURATION = 500; // Game tick self-loop (milliseconds)
         auto gameCurrentTime = gameClock.getElapsedTime().asMilliseconds();
         if (gameCurrentTime > GAME_TICK_DURATION) {
-            gameLogic(players[0], &board, currentCleared);
+            for (Player* player : players) {
+                gameLogic(player, &board, currentCleared);
+            }
+            
             gameClock.restart();
         }
 

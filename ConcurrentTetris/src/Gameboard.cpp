@@ -97,6 +97,10 @@ void Gameboard::clearFilledColumn(const std::vector<int>& filledRowsVector, int 
 int Gameboard::clearFilledRowsAndShiftBlocks() {
     // Returns the number of rows cleared
     std::vector<int> filledRowsVector = getFilledRows();
+    int filledRowsAmount = std::accumulate(filledRowsVector.begin(), filledRowsVector.end(), decltype(filledRowsVector)::value_type(0));
+    if (filledRowsAmount == 0) {
+        return 0;
+    }
     std::vector<std::thread> threads;
 
     if (Globals::THREADED) {

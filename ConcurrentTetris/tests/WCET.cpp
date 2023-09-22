@@ -239,7 +239,7 @@ TEST(TetrisTests, GetGameboardWCET)
     saveMeasurementsToFile(timeArray, "GetGameboardWCET.txt");
 }
 
-TEST(TetrisTests, DISABLED_DrawScoreboardWCET)
+TEST(TetrisTests, DrawScoreboardWCET)
 {
     InputHandler inputHandler;
 
@@ -285,7 +285,7 @@ TEST(TetrisTests, DISABLED_DrawScoreboardWCET)
     saveMeasurementsToFile(timeArray, "DrawScoreboardWCET.txt");
 }
 
-TEST(TetrisTests, DISABLED_DrawGameboardWCET)
+TEST(TetrisTests, DrawGameboardWCET)
 {
     InputHandler inputHandler;
 

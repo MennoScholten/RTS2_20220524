@@ -83,10 +83,12 @@ bool MainMenu::showMainMenu() {
 				if (onePlayerButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                     std::cout << "1 Player selected." << std::endl;
 					this->data.numberOfPlayers = 1;
+					this->data.boardDimensions.x = 10;
                 }
                 else if (twoPlayerButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                     std::cout << "2 Players selected." << std::endl;
 					this->data.numberOfPlayers = 2;
+					this->data.boardDimensions.x = 20;
                 }
 				else if (playButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
 					std::cout << "Play!" << std::endl;

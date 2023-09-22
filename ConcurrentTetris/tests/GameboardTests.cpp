@@ -54,8 +54,8 @@ TEST(TetrisTests, TestGameboardMoveBlock)
 
 TEST(TetrisTests, TestClearingRows)
 {
-    int BOARD_HEIGHT_X = 5;
-    int BOARD_WIDTH_Y = 8;
+    int BOARD_HEIGHT_X = 20;
+    int BOARD_WIDTH_Y = 20;
     Gameboard board(BOARD_HEIGHT_X, BOARD_WIDTH_Y);
     for (int i = 0; i < BOARD_WIDTH_Y; i++) {
         // Fill last 2 rows

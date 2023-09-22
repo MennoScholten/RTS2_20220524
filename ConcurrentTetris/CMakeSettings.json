@@ -9,7 +9,14 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
-      "ctestCommandArgs": ""
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "SFML_DIR",
+          "value": "C:/Binaries/SFML-2.5.1-VS",
+          "type": "PATH"
+        }
+      ]
     }
   ]
 }
